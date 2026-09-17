@@ -1,0 +1,47 @@
+name: Daily Stock Price Update
+
+on:
+  schedule:
+    # Runs at 02:00 UTC = 07:30 AM IST
+    # NSE/BSE close at 15:30 IST, so data is always available by then
+    - cron: '0 2 * * 1-5'   # Monday–Friday only (weekdays)
+
+  workflow_dispatch:          # Allow manual trigger from GitHub UI
+
+permissions:
+  contents: write             # Needed to commit updated Parquet files
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90       # Safety cap; ~7000 stocks should finish in ~30–60 min
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Refresh symbol lists (NSE + BSE)
+        run: python scripts/download_symbol_lists.py
+
+      - name: Run daily stock update
+        run: python scripts/update_stocks.py
+
+      - name: Commit and push updated data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ stock_list_nse.csv stock_list_bse.csv
+          # Only commit if there are actual changes
+          git diff --cached --quiet || git commit -m "chore: daily update $(date -u +'%Y-%m-%d')"
+          git push
