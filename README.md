@@ -164,4 +164,6 @@ This dataset is free to use for **personal, non-commercial purposes** (learning,
 
 ❌ Commercial use, redistribution, resale, or use in paid products/services is **not permitted** without explicit written permission from the author.
 
+For permissions or enquiries: **mail@aswinv.com**
+
 © 2026 aswinv90. All rights reserved.
