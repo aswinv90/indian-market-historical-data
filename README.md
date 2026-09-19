@@ -149,14 +149,16 @@ print(f"Loaded {len(dfs)} stocks")
 
 ## 🔄 Update Schedule
 
-Data is automatically updated every trading day:
+Data is automatically updated every trading day (Monday – Friday) via automated background workflows:
 
-| Event | Time |
-|-------|------|
-| NSE / BSE market close | 3:30 PM IST |
-| Repository auto-update | 7:30 AM IST (next day) |
+| Asset Class | Market Benchmark Close | Repository Auto-Update Execution | Frequency |
+|-------------|------------------------|----------------------------------|-----------|
+| **Equities (NSE & BSE)** | 3:30 PM IST | **7:30 AM IST** (next morning) | Every Weekday (Mon–Fri) |
+| **Commodities (Gold & Silver)** | Spot / Evening Settlement | **7:30 AM – 8:00 AM IST** (next morning) | Every Weekday (Mon–Fri) |
 
-Updates are committed automatically by GitHub Actions — no manual intervention needed.
+> **Note:** The morning schedule ensures all official end-of-day settlement records and benchmark rates from the preceding trading day are finalized and verified before being committed to the dataset.
+>
+> You can also trigger an immediate update manually anytime from the **Actions** tab on GitHub.
 
 ---
 
