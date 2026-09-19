@@ -126,7 +126,7 @@ print(df.loc["2020-01-01":"2020-12-31"])
 ```python
 import pandas as pd
 
-url = "https://raw.githubusercontent.com/aswinv90/indian-historical-stock-price/main/data/NSE/RELIANCE_NS.parquet"
+url = "https://raw.githubusercontent.com/aswinv90/indian-historical-stock-gold-silver-price/main/data/NSE/RELIANCE_NS.parquet"
 df = pd.read_parquet(url)
 print(df.tail())
 ```
