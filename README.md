@@ -1,25 +1,33 @@
-# 📈 Indian Historical Stock Prices
+# 📈 Indian Historical Stock Prices & Commodities (Gold & Silver)
 
-A free, open dataset of **complete daily historical stock price data** for all NSE and BSE listed Indian stocks — updated automatically every trading day.
+A free, open dataset of **complete daily historical stock price data** (NSE & BSE) and **50+ years of historical Gold & Silver bullion rates** — updated automatically every trading day.
 
 ---
 
 ## 📦 Coverage
 
-| Exchange | Stocks | Ticker Format |
-|----------|--------|--------------|
-| NSE | ~2,577 | `SYMBOL_NS.parquet` (e.g. `RELIANCE_NS.parquet`) |
-| BSE | ~4,399 | `SYMBOL_BO.parquet` (e.g. `TATAMOTORS_BO.parquet`) |
+### Equities
+| Exchange | Stocks | Ticker Format | Date Range |
+|----------|--------|---------------|------------|
+| NSE | ~2,577 | `SYMBOL_NS.parquet` (e.g. `RELIANCE_NS.parquet`) | 1991 → Present |
+| BSE | ~4,399 | `SYMBOL_BO.parquet` (e.g. `TATAMOTORS_BO.parquet`) | 1991 → Present |
 
-- **Date range:** January 1991 → Present
-- **Total stocks:** ~6,976
-- **Total size:** ~801 MB
+### Commodities (Bullion)
+| Commodity | Coverage & Purities | Format | Date Range |
+|-----------|---------------------|--------|------------|
+| **Gold** | 24K (99.9%), 22K (91.6%), 18K (75.0%) in ₹/10g & ₹/1g | `GOLD_INR.parquet` | 1970 → Present (56+ yrs) |
+| **Silver** | 999 Fine Silver & 925 Sterling Silver in ₹/kg, ₹/10g & ₹/1g | `SILVER_INR.parquet` | 1970 → Present (56+ yrs) |
+
+- **Total stock files:** ~6,976
+- **Total commodities files:** 2
+- **Total dataset size:** ~801 MB
 
 ---
 
 ## 🗂️ Data Fields
 
-Each Parquet file contains daily records with the following columns:
+### Stock Prices (Equities)
+Each stock Parquet file contains daily records with the following columns:
 
 | Column | Description |
 |--------|-------------|
@@ -32,6 +40,15 @@ Each Parquet file contains daily records with the following columns:
 | `Volume` | Number of shares traded |
 | `Dividends` | Dividend amount on that date (if any) |
 | `Stock Splits` | Split ratio on that date (if any) |
+
+### Commodities (Gold & Silver)
+* **Gold (`data/COMMODITIES/GOLD_INR.parquet`):**
+  * `Gold_24K_10g`, `Gold_24K_1g` (Pure 24 Karat 99.9%)
+  * `Gold_22K_10g`, `Gold_22K_1g` (Standard 22 Karat 91.6%)
+  * `Gold_18K_10g`, `Gold_18K_1g` (Jewellery 18 Karat 75.0%)
+* **Silver (`data/COMMODITIES/SILVER_INR.parquet`):**
+  * `Silver_999_1kg`, `Silver_999_10g`, `Silver_999_1g` (Pure 999 Fine Silver)
+  * `Silver_925_1kg`, `Silver_925_10g`, `Silver_925_1g` (925 Sterling Silver)
 
 ---
 

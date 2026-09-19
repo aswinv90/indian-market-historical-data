@@ -5,10 +5,6 @@ Compiles 50+ years (1970 to present) of Indian Gold and Silver price history
 covering all standard purities:
   - Gold: 24K (99.9%), 22K (91.6%), 18K (75.0%) per 10g and per 1g
   - Silver: 999 Fine Silver, 925 Sterling Silver per 1kg, 10g, and 1g
-
-Data references official Reserve Bank of India (RBI) historical Mumbai bullion
-bulletin series, supplemented with historical exchange rates and international
-benchmark series.
 """
 
 import sys
