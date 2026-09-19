@@ -37,6 +37,9 @@ jobs:
       - name: Run daily stock update
         run: python scripts/update_stocks.py
 
+      - name: Run daily commodities update (Gold & Silver)
+        run: python scripts/update_commodities.py
+
       - name: Verify data coverage
         run: python scripts/verify_data.py --stale-days 2 || true
         # '|| true' prevents CI failure on missing stocks during bootstrap;

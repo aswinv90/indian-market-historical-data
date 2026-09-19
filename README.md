@@ -44,13 +44,17 @@ data/
 │   ├── TCS_NS.parquet
 │   ├── INFY_NS.parquet
 │   └── ... (~2,577 files)
-└── BSE/
-    ├── TATAMOTORS_BO.parquet
-    ├── HDFCBANK_BO.parquet
-    └── ... (~4,399 files)
+├── BSE/
+│   ├── TATAMOTORS_BO.parquet
+│   ├── HDFCBANK_BO.parquet
+│   └── ... (~4,399 files)
+└── COMMODITIES/
+    ├── GOLD_INR.parquet      # 50+ yrs (1970 - present) 24K, 22K, 18K in ₹/10g & ₹/1g
+    └── SILVER_INR.parquet    # 50+ yrs (1970 - present) 999 & 925 in ₹/kg, 10g & 1g
 scripts/
 ├── fetch_all_stocks.py       # One-time full history bootstrap
 ├── update_stocks.py          # Daily incremental updater
+├── update_commodities.py     # Daily commodities updater (Gold & Silver)
 ├── verify_data.py            # Data quality checker
 ├── download_symbol_lists.py  # Refresh stock symbol master lists
 └── utils.py                  # Shared helpers
@@ -78,6 +82,13 @@ print(df.tail())
 # BSE stock
 df = pd.read_parquet("data/BSE/HDFCBANK_BO.parquet")
 print(df.tail())
+
+# Commodities (Gold & Silver - 50+ Years)
+gold = pd.read_parquet("data/COMMODITIES/GOLD_INR.parquet")
+print(gold[["Gold_24K_10g", "Gold_22K_10g", "Gold_18K_10g"]].tail())
+
+silver = pd.read_parquet("data/COMMODITIES/SILVER_INR.parquet")
+print(silver[["Silver_999_1kg", "Silver_925_1kg"]].tail())
 ```
 
 ### Query a specific date
