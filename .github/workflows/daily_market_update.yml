@@ -2,9 +2,9 @@ name: Daily Market Update (Stocks, Gold & Silver)
 
 on:
   schedule:
-    # Runs at 02:00 UTC = 07:30 AM IST
-    # NSE/BSE close at 15:30 IST, so data is always available by then
-    - cron: '0 2 * * 1-5'   # Monday–Friday only (weekdays)
+    # Runs every day at 02:00 UTC = 07:30 AM IST
+    # Evaluates whether the preceding session was an active market day (including weekend Muhurat Trading)
+    - cron: '0 2 * * *'
 
   workflow_dispatch:          # Allow manual trigger from GitHub UI
 
