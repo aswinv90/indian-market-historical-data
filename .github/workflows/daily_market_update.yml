@@ -31,8 +31,14 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Refresh symbol lists (NSE + BSE)
-        run: python scripts/download_symbol_lists.py
+      - name: Check if previous trading session was an Indian Market Working Day
+        id: market_check
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "Manual trigger detected. Forcing update."
+          else
+            python scripts/check_market_day.py
+          fi
 
       - name: Run daily stock update
         run: python scripts/update_stocks.py

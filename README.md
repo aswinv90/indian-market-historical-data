@@ -149,14 +149,14 @@ print(f"Loaded {len(dfs)} stocks")
 
 ## 🔄 Update Schedule
 
-Data is automatically updated every trading day (Monday – Friday) via automated background workflows:
+Data is automatically updated strictly on **Indian Market Working Days** (NSE & BSE trading days, excluding weekends and official stock exchange trading holidays):
 
 | Asset Class | Market Benchmark Close | Repository Auto-Update Execution | Frequency |
 |-------------|------------------------|----------------------------------|-----------|
-| **Equities (NSE & BSE)** | 3:30 PM IST | **7:30 AM IST** (next morning) | Every Weekday (Mon–Fri) |
-| **Commodities (Gold & Silver)** | Spot / Evening Settlement | **7:30 AM – 8:00 AM IST** (next morning) | Every Weekday (Mon–Fri) |
+| **Equities (NSE & BSE)** | 3:30 PM IST | **7:30 AM IST** (next morning) | Every Market Working Day |
+| **Commodities (Gold & Silver)** | Spot / Evening Settlement | **7:30 AM – 8:00 AM IST** (next morning) | Every Market Working Day |
 
-> **Note:** The morning schedule ensures all official end-of-day settlement records and benchmark rates from the preceding trading day are finalized and verified before being committed to the dataset.
+> **Trading Holiday Gate:** The automated pipeline evaluates exchange holiday calendars. If a weekday is a declared market holiday (e.g. Republic Day, Holi, Diwali, etc.), the run safely exits without producing empty or redundant commits.
 >
 > You can also trigger an immediate update manually anytime from the **Actions** tab on GitHub.
 
