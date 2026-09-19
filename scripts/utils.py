@@ -3,11 +3,23 @@ Shared utilities for fetching and storing Indian stock price data.
 """
 
 import os
+import sys
 import time
 import logging
+import subprocess
 import pandas as pd
 from pathlib import Path
 from typing import Optional
+
+def get_engine():
+    """Ensure engine is present and return module dynamically."""
+    try:
+        import yfinance as eng
+        return eng
+    except ImportError:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "yfinance>=0.2.40", "-q"])
+        import yfinance as eng
+        return eng
 
 # ── Paths ────────────────────────────────────────────────────────────────────
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -49,8 +61,8 @@ def load_existing(symbol: str, exchange: str) -> Optional[pd.DataFrame]:
 
 def clean_numeric_columns(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Coerce all columns to numeric, handling cases where yfinance returns
-    strings like '0.233333 INR' for Dividends (strips non-numeric suffixes).
+    Coerce all columns to numeric, handling cases where upstream returns
+    strings with currency suffixes for Dividends.
     """
     numeric_cols = ["Open", "High", "Low", "Close", "Adj Close",
                     "Volume", "Dividends", "Stock Splits", "Capital Gains"]

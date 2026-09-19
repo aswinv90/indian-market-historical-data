@@ -11,7 +11,6 @@ Usage:
 import sys
 import time
 
-import yfinance as yf
 from tqdm import tqdm
 
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent))
@@ -25,7 +24,10 @@ from utils import (
     log,
     rate_limited_sleep,
     parquet_path,
+    get_engine,
 )
+
+yf = get_engine()
 
 RETRY_LIMIT = 3
 

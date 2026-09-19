@@ -18,7 +18,6 @@ import argparse
 import sys
 import time
 
-import yfinance as yf
 from tqdm import tqdm
 
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).parent))
@@ -31,7 +30,10 @@ from utils import (
     log,
     rate_limited_sleep,
     FAILED_LOG,
+    get_engine,
 )
+
+yf = get_engine()
 
 # ── Constants ─────────────────────────────────────────────────────────────────
 BATCH_SIZE   = 10   # download N tickers at once (yfinance group download)

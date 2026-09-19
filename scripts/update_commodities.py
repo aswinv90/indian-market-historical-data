@@ -6,9 +6,14 @@ using live international futures + USD/INR exchange rate, computing all
 domestic purities (24K, 22K, 18K for Gold; 999 and 925 for Silver).
 """
 
+import sys
 from pathlib import Path
 import pandas as pd
-import yfinance as yf
+
+sys.path.insert(0, str(Path(__file__).parent))
+from utils import get_engine
+
+yf = get_engine()
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 COMMODITIES_DIR = ROOT_DIR / "data" / "COMMODITIES"
