@@ -1,4 +1,4 @@
-name: Daily Stock Price Update
+name: Daily Market Update (Stocks, Gold & Silver)
 
 on:
   schedule:

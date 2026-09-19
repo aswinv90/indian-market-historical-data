@@ -76,7 +76,7 @@ scripts/
 ├── download_symbol_lists.py  # Refresh stock symbol master lists
 └── utils.py                  # Shared helpers
 .github/workflows/
-└── update_stocks.yml         # Auto-runs every weekday at 7:30 AM IST
+└── daily_market_update.yml   # Auto-runs every weekday at 7:30 AM IST (Stocks, Gold & Silver)
 ```
 
 ---
