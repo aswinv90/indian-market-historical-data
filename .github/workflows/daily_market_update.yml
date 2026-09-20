@@ -36,25 +36,29 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "Manual trigger detected. Forcing update."
+            echo "is_open=true" >> $GITHUB_OUTPUT
           else
             python scripts/check_market_day.py
           fi
 
       - name: Run daily stock update
+        if: steps.market_check.outputs.is_open == 'true'
         run: python scripts/update_stocks.py
 
       - name: Run daily commodities update (Gold & Silver)
+        if: steps.market_check.outputs.is_open == 'true'
         run: python scripts/update_commodities.py
 
       - name: Run daily mutual funds NAV update
+        if: steps.market_check.outputs.is_open == 'true'
         run: python scripts/update_mf.py
 
       - name: Verify data coverage
+        if: steps.market_check.outputs.is_open == 'true'
         run: python scripts/verify_data.py --stale-days 2 || true
-        # '|| true' prevents CI failure on missing stocks during bootstrap;
-        # remove it once the full bootstrap is complete.
 
       - name: Commit and push updated data
+        if: steps.market_check.outputs.is_open == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

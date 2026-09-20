@@ -8,6 +8,7 @@ If today (or the preceding settlement day) is a weekend or an official
 trading holiday, this script exits with code 1 to safely halt the CI job.
 """
 
+import os
 import sys
 import json
 import ssl
@@ -89,7 +90,13 @@ def is_market_working_day():
 
 if __name__ == "__main__":
     is_open = is_market_working_day()
+    
+    # Export to GitHub Actions environment output if running in CI
+    gh_output = os.environ.get("GITHUB_OUTPUT")
+    if gh_output:
+        with open(gh_output, "a") as f:
+            f.write(f"is_open={'true' if is_open else 'false'}\n")
+            
     if not is_open:
-        print("Market holiday detected. Skipping automated update.")
-        sys.exit(1)
+        print("Market closed / holiday detected. Remaining steps will be skipped cleanly.")
     sys.exit(0)
