@@ -184,11 +184,13 @@ Data is automatically updated strictly on **Indian Market Working Days** (NSE & 
 
 | Asset Class | Market Benchmark Close | Repository Auto-Update Execution | Frequency |
 |-------------|------------------------|----------------------------------|-----------|
-| **Equities (NSE & BSE)** | 3:30 PM IST | **7:30 AM IST** (next morning) | Every Market Working Day |
-| **Commodities (Gold & Silver)** | Spot / Evening Settlement | **7:30 AM – 8:00 AM IST** (next morning) | Every Market Working Day |
-| **Mutual Funds (Daily NAV)** | Evening AMFI Settlement (9:00 PM – 11:00 PM IST) | **7:30 AM – 8:00 AM IST** (next morning) | Every Market Working Day |
+| **Equities (NSE & BSE)** | 3:30 PM IST | **9:00 PM IST** (same evening) | Every Market Working Day |
+| **Commodities (Gold & Silver)** | Spot / Evening Settlement | **9:00 PM – 9:30 PM IST** (same evening) | Every Market Working Day |
+| **Mutual Funds (Daily NAV)** | Evening AMFI Settlement (~8:30 PM – 9:00 PM IST) | **9:00 PM – 9:30 PM IST** (same evening) | Every Market Working Day |
 
-> **Trading Holiday Gate:** The automated pipeline evaluates exchange holiday calendars. If a weekday is a declared market holiday (e.g. Republic Day, Holi, Diwali, etc.), the run safely exits without producing empty or redundant commits.
+> **Weekend Readiness:** Running on the same evening at 9:00 PM IST ensures that all Friday closing prices and weekend Muhurat sessions are committed and available immediately for researchers, portfolio backtesters, and weekend users throughout Saturday and Sunday.
+>
+> **Trading Holiday Gate:** The automated pipeline evaluates exchange holiday calendars. If a day is a declared market holiday (e.g. Republic Day, Holi, etc.), the run safely exits without producing empty commits.
 >
 > You can also trigger an immediate update manually anytime from the **Actions** tab on GitHub.
 

@@ -2,9 +2,9 @@ name: Daily Market Update (Stocks, Gold & Silver)
 
 on:
   schedule:
-    # Runs every day at 02:00 UTC = 07:30 AM IST
-    # Evaluates whether the preceding session was an active market day (including weekend Muhurat Trading)
-    - cron: '0 2 * * *'
+    # Runs every day at 15:30 UTC = 09:00 PM IST (Same-day evening run)
+    # Evaluates whether today was an active market day (including weekend Muhurat Trading)
+    - cron: '30 15 * * *'
 
   workflow_dispatch:          # Allow manual trigger from GitHub UI
 
