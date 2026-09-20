@@ -1,6 +1,6 @@
-# 📈 Indian Historical Stock Prices & Commodities (Gold & Silver)
+# 📈 Indian Historical Stock Prices, Commodities & Mutual Funds
 
-A free, open dataset of **complete daily historical stock price data** (NSE & BSE) and **50+ years of historical Gold & Silver bullion rates** — updated automatically every trading day.
+A free, open dataset of **complete daily historical stock price data** (NSE & BSE), **50+ years of historical Gold & Silver bullion rates**, and **complete daily NAV history of all Indian Mutual Funds from inception** — updated automatically every market working day.
 
 ---
 
@@ -18,9 +18,15 @@ A free, open dataset of **complete daily historical stock price data** (NSE & BS
 | **Gold** | 24K (99.9%), 22K (91.6%), 18K (75.0%) in ₹/10g & ₹/1g | `GOLD_INR.parquet` | 1970 → Present (56+ yrs) |
 | **Silver** | 999 Fine Silver & 925 Sterling Silver in ₹/kg, ₹/10g & ₹/1g | `SILVER_INR.parquet` | 1970 → Present (56+ yrs) |
 
+### Mutual Funds (NAV from Inception)
+| Category | Schemes Tracked | Format | Date Range | Total Daily Records |
+|----------|-----------------|--------|------------|---------------------|
+| **All Indian Mutual Funds** | **37,896 schemes** | `data/MF/nav_part_0..9.parquet` | Inception → Present | **35,358,852 records** |
+
 - **Total stock files:** ~6,976
 - **Total commodities files:** 2
-- **Total dataset size:** ~801 MB
+- **Total mutual fund partitions:** 10 + 1 master index
+- **Total dataset size:** ~1.02 GB
 
 ---
 
@@ -50,6 +56,14 @@ Each stock Parquet file contains daily records with the following columns:
   * `Silver_999_1kg`, `Silver_999_10g`, `Silver_999_1g` (Pure 999 Fine Silver)
   * `Silver_925_1kg`, `Silver_925_10g`, `Silver_925_1g` (925 Sterling Silver)
 
+### Mutual Funds (NAV from Inception)
+* **Master Scheme Directory (`data/MF/mf_meta.parquet`):**
+  * Index of all 37,896 funds: `schemeCode`, `schemeName`, `fundHouse`, `category`, `schemeType`, `isinGrowth`, `isinDiv`, `records`, `oldestDate`, `latestDate`.
+* **Daily NAV Partitions (`data/MF/nav_part_0.parquet` ... `nav_part_9.parquet`):**
+  * `date`: Trading date
+  * `schemeCode`: Unique numerical scheme code
+  * `nav`: Daily Net Asset Value (₹)
+
 ---
 
 ## 📁 Repository Structure
@@ -65,18 +79,23 @@ data/
 │   ├── TATAMOTORS_BO.parquet
 │   ├── HDFCBANK_BO.parquet
 │   └── ... (~4,399 files)
-└── COMMODITIES/
-    ├── GOLD_INR.parquet      # 50+ yrs (1970 - present) 24K, 22K, 18K in ₹/10g & ₹/1g
-    └── SILVER_INR.parquet    # 50+ yrs (1970 - present) 999 & 925 in ₹/kg, 10g & 1g
+├── COMMODITIES/
+│   ├── GOLD_INR.parquet      # 50+ yrs (1970 - present) 24K, 22K, 18K in ₹/10g & ₹/1g
+│   └── SILVER_INR.parquet    # 50+ yrs (1970 - present) 999 & 925 in ₹/kg, 10g & 1g
+└── MF/
+    ├── mf_meta.parquet       # Master scheme catalog of all 37,896 mutual fund schemes
+    ├── nav_part_0.parquet    # Historical NAV from inception partitioned by schemeCode % 10
+    └── ... (nav_part_0 .. nav_part_9.parquet)
 scripts/
 ├── fetch_all_stocks.py       # One-time full history bootstrap
 ├── update_stocks.py          # Daily incremental updater
 ├── update_commodities.py     # Daily commodities updater (Gold & Silver)
+├── update_mf.py              # Daily mutual funds NAV updater
 ├── verify_data.py            # Data quality checker
 ├── download_symbol_lists.py  # Refresh stock symbol master lists
 └── utils.py                  # Shared helpers
 .github/workflows/
-└── daily_market_update.yml   # Auto-runs every weekday at 7:30 AM IST (Stocks, Gold & Silver)
+└── daily_market_update.yml   # Auto-runs on Indian Market Working Days (Stocks, Commodities, MFs)
 ```
 
 ---
@@ -106,6 +125,18 @@ print(gold[["Gold_24K_10g", "Gold_22K_10g", "Gold_18K_10g"]].tail())
 
 silver = pd.read_parquet("data/COMMODITIES/SILVER_INR.parquet")
 print(silver[["Silver_999_1kg", "Silver_925_1kg"]].tail())
+
+# Mutual Funds (Load any scheme's full inception history)
+# 1. Look up scheme code from master directory:
+meta = pd.read_parquet("data/MF/mf_meta.parquet")
+scheme = meta[meta["schemeName"].str.contains("SBI Small Cap", case=False, na=False)]
+scheme_code = scheme.index[0] # e.g. 125494
+
+# 2. Read corresponding partition (schemeCode % 10):
+part_file = f"data/MF/nav_part_{scheme_code % 10}.parquet"
+df_nav = pd.read_parquet(part_file)
+fund_history = df_nav[df_nav["schemeCode"] == scheme_code].set_index("date")
+print(fund_history.tail())
 ```
 
 ### Query a specific date
@@ -155,6 +186,7 @@ Data is automatically updated strictly on **Indian Market Working Days** (NSE & 
 |-------------|------------------------|----------------------------------|-----------|
 | **Equities (NSE & BSE)** | 3:30 PM IST | **7:30 AM IST** (next morning) | Every Market Working Day |
 | **Commodities (Gold & Silver)** | Spot / Evening Settlement | **7:30 AM – 8:00 AM IST** (next morning) | Every Market Working Day |
+| **Mutual Funds (Daily NAV)** | Evening AMFI Settlement (9:00 PM – 11:00 PM IST) | **7:30 AM – 8:00 AM IST** (next morning) | Every Market Working Day |
 
 > **Trading Holiday Gate:** The automated pipeline evaluates exchange holiday calendars. If a weekday is a declared market holiday (e.g. Republic Day, Holi, Diwali, etc.), the run safely exits without producing empty or redundant commits.
 >
