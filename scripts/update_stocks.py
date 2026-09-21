@@ -29,17 +29,24 @@ from utils import (
 
 yf = get_engine()
 
-RETRY_LIMIT = 3
+RETRY_LIMIT = 2
+RATE_LIMIT_CONSECUTIVE_THRESHOLD = 3
+COOLDOWN_SECONDS = 60
+MAX_CIRCUIT_TRIPS = 3
 
 
 def update_ticker(ticker: str, exchange: str, retries: int = RETRY_LIMIT) -> int:
     """
     Fetch last 5 trading days for a ticker and merge into existing Parquet.
-    Returns number of new rows added, or -1 on failure.
+    Returns:
+        >= 0 : number of new rows added (or 0 if already up to date / skipped)
+        -1   : general error
+        -429 : rate limit error (HTTP 429)
     """
-    # Skip tickers that have never been bootstrapped
+    # Only update stocks that already exist in our historical archive
     if not parquet_path(ticker, exchange).exists():
-        log.debug(f"[NEW] {ticker}: no existing data, doing full fetch")
+        log.debug(f"[SKIP] {ticker}: not in local archive, skipping in daily update")
+        return 0
 
     for attempt in range(1, retries + 1):
         try:
@@ -61,6 +68,12 @@ def update_ticker(ticker: str, exchange: str, retries: int = RETRY_LIMIT) -> int
             return new_rows
 
         except Exception as e:
+            err_msg = str(e)
+            is_429 = "Too Many Requests" in err_msg or "429" in err_msg or "Rate limited" in err_msg
+            if is_429:
+                log.warning(f"[RATE LIMITED] {ticker}: {err_msg}")
+                return -429
+
             log.warning(f"[RETRY {attempt}/{retries}] {ticker}: {e}")
             time.sleep(2 ** attempt)
 
@@ -71,14 +84,38 @@ def update_ticker(ticker: str, exchange: str, retries: int = RETRY_LIMIT) -> int
 def run_exchange(tickers: list[str], exchange: str) -> tuple[int, int, int]:
     total_new = 0
     ok = fail = 0
+    consecutive_429 = 0
+    circuit_trips = 0
+
     for ticker in tqdm(tickers, desc=f"Updating {exchange}", unit="stock"):
         result = update_ticker(ticker, exchange)
         if result >= 0:
             total_new += result
             ok += 1
+            consecutive_429 = 0  # Reset on success
+        elif result == -429:
+            fail += 1
+            consecutive_429 += 1
+            if consecutive_429 >= RATE_LIMIT_CONSECUTIVE_THRESHOLD:
+                circuit_trips += 1
+                log.warning(
+                    f"[CIRCUIT BREAKER] Hit {consecutive_429} consecutive rate limits. "
+                    f"Trip #{circuit_trips}/{MAX_CIRCUIT_TRIPS}. Cooling down for {COOLDOWN_SECONDS}s..."
+                )
+                time.sleep(COOLDOWN_SECONDS)
+                consecutive_429 = 0  # Reset counter after cooldown
+                if circuit_trips >= MAX_CIRCUIT_TRIPS:
+                    log.error(
+                        f"[CIRCUIT BREAKER] Maximum {MAX_CIRCUIT_TRIPS} cooldown trips reached for {exchange}. "
+                        "Saving progress and gracefully moving forward."
+                    )
+                    break
         else:
             fail += 1
+            consecutive_429 = 0
+
         rate_limited_sleep(0.3)
+
     return ok, fail, total_new
 
 

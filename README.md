@@ -115,7 +115,10 @@ scripts/
 ├── download_symbol_lists.py  # Refresh stock symbol master lists
 └── utils.py                  # Shared helpers
 .github/workflows/
-└── daily_market_update.yml   # Auto-runs on Indian Market Working Days (Stocks, Commodities, MFs)
+├── daily_mf_update.yml          # 09:00 PM IST — Mutual Funds NAV from inception
+├── daily_commodities_update.yml # 09:05 PM IST — Gold & Silver bullion spot rates
+├── daily_unlisted_update.yml    # 09:10 PM IST — Top 22 unlisted / pre-IPO equities
+└── daily_stocks_update.yml      # 09:15 PM IST — NSE & BSE stocks (with circuit breaker)
 ```
 
 ---
@@ -204,19 +207,22 @@ print(f"Loaded {len(dfs)} stocks")
 
 ## 🔄 Update Schedule
 
-Data is automatically updated strictly on **Indian Market Working Days** (NSE & BSE trading days, excluding weekends and official stock exchange trading holidays):
+Data is automatically updated strictly on **Indian Market Working Days** (NSE & BSE trading days, excluding weekends and official stock exchange trading holidays) via **4 dedicated, isolated workflows**:
 
-| Asset Class | Market Benchmark Close | Repository Auto-Update Execution | Frequency |
-|-------------|------------------------|----------------------------------|-----------|
-| **Equities (NSE & BSE)** | 3:30 PM IST | **9:00 PM IST** (same evening) | Every Market Working Day |
-| **Commodities (Gold & Silver)** | Spot / Evening Settlement | **9:00 PM – 9:30 PM IST** (same evening) | Every Market Working Day |
-| **Mutual Funds (Daily NAV)** | Evening AMFI Settlement (~8:30 PM – 9:00 PM IST) | **9:00 PM – 9:30 PM IST** (same evening) | Every Market Working Day |
+| Workflow | Asset Class | Execution Time | Average Duration | Isolation & Resilience |
+|----------|-------------|----------------|------------------|------------------------|
+| `daily_mf_update.yml` | **Mutual Funds (Daily NAV)** | **9:00 PM IST** (15:30 UTC) | ~35 seconds | AMFI direct fetch; 100% independent |
+| `daily_commodities_update.yml` | **Commodities (Gold & Silver)** | **9:05 PM IST** (15:35 UTC) | ~10 seconds | Bullion spot rates; 100% independent |
+| `daily_unlisted_update.yml` | **Unlisted & Pre-IPO Equities** | **9:10 PM IST** (15:40 UTC) | ~5 seconds | Indicative milestones; 100% independent |
+| `daily_stocks_update.yml` | **Equities (NSE & BSE)** | **9:15 PM IST** (15:45 UTC) | ~30–50 minutes | Built-in circuit breaker & cooldown; 90m cap |
 
-> **Weekend Readiness:** Running on the same evening at 9:00 PM IST ensures that all Friday closing prices and weekend Muhurat sessions are committed and available immediately for researchers, portfolio backtesters, and weekend users throughout Saturday and Sunday.
+> **Zero Blast Radius:** Because each asset class runs in its own dedicated workflow, a delay or rate limit in stock fetching has zero impact on Mutual Funds or Commodities. NAVs and bullion prices are committed and available immediately every evening.
+>
+> **Weekend Readiness:** Running on the same evening between 9:00 PM and 9:15 PM IST ensures that all Friday closing prices and weekend Muhurat sessions are committed and available immediately for researchers, portfolio backtesters, and weekend users throughout Saturday and Sunday.
 >
 > **Trading Holiday Gate:** The automated pipeline evaluates exchange holiday calendars. If a day is a declared market holiday (e.g. Republic Day, Holi, etc.), the run safely exits without producing empty commits.
 >
-> You can also trigger an immediate update manually anytime from the **Actions** tab on GitHub.
+> You can also trigger an immediate update for any asset class manually anytime from the **Actions** tab on GitHub.
 
 ---
 

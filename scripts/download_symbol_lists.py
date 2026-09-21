@@ -74,18 +74,27 @@ def download_bse():
         r = requests.get(BSE_URL, headers=HEADERS, timeout=30)
         r.raise_for_status()
         df = pd.read_csv(io.StringIO(r.text))
-        # Keep only EQ segment (already all EQ, but filter to be safe)
+        # Keep only EQ segment
         df = df[df["instrument_type"] == "EQ"].copy()
+
+        # Filter out debt debentures, bonds, and FMPs that trade on BSE cash segment:
+        # Debentures usually have 3+ digits (e.g. MML120626A, IPRU3315, H1861D46DG) or debt keywords in name
+        debt_keywords = r"DEBENTURE|BOND|NCD|CAPITAL PROTECTION|FIXED MATURITY|FMP"
+        name_has_debt = df["name"].astype(str).str.contains(debt_keywords, case=False, na=False)
+        symbol_has_debt_digits = df["tradingsymbol"].astype(str).str.contains(r"\d{3,}", regex=True, na=False)
+        df = df[~name_has_debt & ~symbol_has_debt_digits].copy()
+
         # Rename to our standard column
         df = df.rename(columns={
             "exchange_token": "Security Code",
             "tradingsymbol":  "Tradingsymbol",
             "name":           "Issuer Name",
         })
+        df = df.drop_duplicates(subset=["Tradingsymbol"]).sort_values(by="Tradingsymbol")
         df[["Security Code", "Tradingsymbol", "Issuer Name"]].to_csv(
             BSE_SYMBOL_FILE, index=False
         )
-        log.info(f"BSE: {len(df)} symbols saved → {BSE_SYMBOL_FILE}")
+        log.info(f"BSE: {len(df)} equity symbols saved → {BSE_SYMBOL_FILE}")
     except Exception as e:
         log.error(f"Failed to download BSE list: {e}")
         log.warning("BSE list unavailable; BSE fetch will be skipped")

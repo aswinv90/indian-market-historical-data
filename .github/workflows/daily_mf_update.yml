@@ -1,0 +1,59 @@
+name: Daily Mutual Funds NAV Update
+
+on:
+  schedule:
+    # Runs every day at 15:30 UTC = 09:00 PM IST (AMFI publishes NAVs ~8:30-9:00 PM IST)
+    - cron: '30 15 * * *'
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-mf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check if session was an Indian Market Working Day
+        id: market_check
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "Manual trigger detected. Forcing update."
+            echo "is_open=true" >> $GITHUB_OUTPUT
+          else
+            python scripts/check_market_day.py
+          fi
+
+      - name: Run daily mutual funds NAV update
+        if: steps.market_check.outputs.is_open == 'true'
+        run: python scripts/update_mf.py
+
+      - name: Commit and push updated mutual funds data
+        if: steps.market_check.outputs.is_open == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/MF/
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(mf): daily NAV update $(date -u +'%Y-%m-%d')"
+            git pull --rebase origin main
+            git push origin main
+          else
+            echo "No changes to commit for Mutual Funds."
+          fi
