@@ -2,6 +2,8 @@
 
 A free, open dataset of **complete daily historical stock price data** (NSE & BSE), **50+ years of historical Gold & Silver bullion rates**, **complete daily NAV history of all Indian Mutual Funds from inception**, and **historical valuations of major Indian Unlisted / Pre-IPO shares (2019 → Present)** — updated automatically every market working day.
 
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support%20Project-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/aswinv)
+
 ---
 
 ## 📦 Coverage
@@ -241,6 +243,14 @@ python scripts/verify_data.py
 This is a static file repository hosted on GitHub. GitHub enforces a rate limit of approximately **60 raw file requests per hour per IP address**. Please be mindful of this when building applications on top of this dataset.
 
 If you need bulk access, clone the repository locally instead of fetching individual files via raw URLs.
+
+---
+
+## ☕ Support & Sponsorship
+
+If this free, open dataset saves you time, powers your research, or assists your financial modeling, consider supporting its daily server bandwidth and ongoing maintenance:
+
+<a href="https://www.buymeacoffee.com/aswinv" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" width="190"></a>
 
 ---
 
