@@ -1,0 +1,146 @@
+date,symbol,company,price,event,sector,face_value
+2019-12-05,BOAT,Imagine Marketing Ltd (boAt),180.0,Fireside Ventures Investment,Consumer Electronics,1.0
+2021-01-15,BOAT,Imagine Marketing Ltd (boAt),450.0,Warburg Pincus Funding Round,Consumer Electronics,1.0
+2021-11-20,BOAT,Imagine Marketing Ltd (boAt),1150.0,Pre-IPO Filing Speculation,Consumer Electronics,1.0
+2022-07-15,BOAT,Imagine Marketing Ltd (boAt),850.0,IPO Postponement Valuation Adjustment,Consumer Electronics,1.0
+2023-10-18,BOAT,Imagine Marketing Ltd (boAt),920.0,Secondary Market Quote,Consumer Electronics,1.0
+2024-08-10,BOAT,Imagine Marketing Ltd (boAt),1050.0,Secondary Market Quote,Consumer Electronics,1.0
+2026-09-18,BOAT,Imagine Marketing Ltd (boAt),1180.0,Current Indicative Market Quote,Consumer Electronics,1.0
+2019-08-20,CARE_HEALTH,Care Health Insurance Ltd,45.0,Kedaara Capital Infusion Baseline,Stand-alone Health Insurance (SAHI),10.0
+2021-03-15,CARE_HEALTH,Care Health Insurance Ltd,95.0,COVID Health Premium Surge,Stand-alone Health Insurance (SAHI),10.0
+2022-05-18,CARE_HEALTH,Care Health Insurance Ltd,140.0,Secondary Dealer Quote,Stand-alone Health Insurance (SAHI),10.0
+2023-09-22,CARE_HEALTH,Care Health Insurance Ltd,185.0,Burman Family / Religare Dispute Surge,Stand-alone Health Insurance (SAHI),10.0
+2024-06-15,CARE_HEALTH,Care Health Insurance Ltd,220.0,Secondary Market Quote,Stand-alone Health Insurance (SAHI),10.0
+2026-09-18,CARE_HEALTH,Care Health Insurance Ltd,260.0,Current Indicative Market Quote,Stand-alone Health Insurance (SAHI),10.0
+2019-02-15,CIAL,Cochin International Airport Ltd,140.0,Secondary Market Quote,Aviation & Infrastructure,10.0
+2020-07-20,CIAL,Cochin International Airport Ltd,110.0,COVID Flight Restrictions Low,Aviation & Infrastructure,10.0
+2021-12-10,CIAL,Cochin International Airport Ltd,185.0,Dividend Track Record Valuation,Aviation & Infrastructure,10.0
+2023-04-18,CIAL,Cochin International Airport Ltd,220.0,Secondary Market Quote,Aviation & Infrastructure,10.0
+2024-05-15,CIAL,Cochin International Airport Ltd,290.0,Secondary Market Quote,Aviation & Infrastructure,10.0
+2026-09-18,CIAL,Cochin International Airport Ltd,340.0,Current Indicative Market Quote,Aviation & Infrastructure,10.0
+2019-05-10,CSK,Chennai Super Kings Cricket Ltd,25.0,Secondary Dealer Demat Quote,Sports & Entertainment,0.1
+2020-10-15,CSK,Chennai Super Kings Cricket Ltd,50.0,Secondary Market Quote,Sports & Entertainment,0.1
+2021-10-25,CSK,Chennai Super Kings Cricket Ltd,135.0,IPL Championship Win Valuation,Sports & Entertainment,0.1
+2022-09-12,CSK,Chennai Super Kings Cricket Ltd,175.0,Media Rights Deal Surge,Sports & Entertainment,0.1
+2023-06-05,CSK,Chennai Super Kings Cricket Ltd,210.0,5th Title Valuation Spike,Sports & Entertainment,0.1
+2024-04-20,CSK,Chennai Super Kings Cricket Ltd,195.0,Secondary Market Quote,Sports & Entertainment,0.1
+2026-09-18,CSK,Chennai Super Kings Cricket Ltd,230.0,Current Indicative Market Quote,Sports & Entertainment,0.1
+2019-04-12,HDB_FINANCIAL,HDB Financial Services Ltd,920.0,Secondary Market Quote,Financial Services / NBFC,10.0
+2020-02-18,HDB_FINANCIAL,HDB Financial Services Ltd,1150.0,Pre-COVID Peak Valuation,Financial Services / NBFC,10.0
+2020-06-25,HDB_FINANCIAL,HDB Financial Services Ltd,680.0,COVID Correction Low,Financial Services / NBFC,10.0
+2021-09-15,HDB_FINANCIAL,HDB Financial Services Ltd,950.0,Secondary Market Quote,Financial Services / NBFC,10.0
+2022-11-20,HDB_FINANCIAL,HDB Financial Services Ltd,720.0,Secondary Market Quote,Financial Services / NBFC,10.0
+2023-09-10,HDB_FINANCIAL,HDB Financial Services Ltd,850.0,Secondary Market Quote,Financial Services / NBFC,10.0
+2024-05-18,HDB_FINANCIAL,HDB Financial Services Ltd,1100.0,HDFC Bank IPO Approval Announcement,Financial Services / NBFC,10.0
+2026-09-18,HDB_FINANCIAL,HDB Financial Services Ltd,1280.0,Current Indicative Market Quote,Financial Services / NBFC,10.0
+2019-03-20,HERO_FINCORP,Hero Fincorp Ltd,850.0,Secondary Market Quote,Financial Services / NBFC,10.0
+2020-08-15,HERO_FINCORP,Hero Fincorp Ltd,720.0,Secondary Market Quote,Financial Services / NBFC,10.0
+2021-11-10,HERO_FINCORP,Hero Fincorp Ltd,980.0,Secondary Market Quote,Financial Services / NBFC,10.0
+2023-02-15,HERO_FINCORP,Hero Fincorp Ltd,1050.0,Secondary Market Quote,Financial Services / NBFC,10.0
+2024-05-30,HERO_FINCORP,Hero Fincorp Ltd,1450.0,IPO DRHP Filing Speculation,Financial Services / NBFC,10.0
+2026-09-18,HERO_FINCORP,Hero Fincorp Ltd,1580.0,Current Indicative Market Quote,Financial Services / NBFC,10.0
+2019-03-25,MOHAN_MEAKIN,Mohan Meakin Ltd,380.0,Secondary Dealer Quote,Distilleries & Breweries,5.0
+2020-09-18,MOHAN_MEAKIN,Mohan Meakin Ltd,620.0,Secondary Market Quote,Distilleries & Breweries,5.0
+2021-12-15,MOHAN_MEAKIN,Mohan Meakin Ltd,980.0,Spirits Sector Re-rating,Distilleries & Breweries,5.0
+2023-03-10,MOHAN_MEAKIN,Mohan Meakin Ltd,1350.0,Secondary Market Quote,Distilleries & Breweries,5.0
+2024-04-15,MOHAN_MEAKIN,Mohan Meakin Ltd,1850.0,Secondary Market Quote,Distilleries & Breweries,5.0
+2026-09-18,MOHAN_MEAKIN,Mohan Meakin Ltd,2250.0,Current Indicative Market Quote,Distilleries & Breweries,5.0
+2019-05-15,NAYARA_ENERGY,Nayara Energy Ltd,195.0,Post-Delisting Secondary Trade,Oil Refining & Petrochemicals,10.0
+2021-08-20,NAYARA_ENERGY,Nayara Energy Ltd,240.0,Secondary Market Quote,Oil Refining & Petrochemicals,10.0
+2022-06-18,NAYARA_ENERGY,Nayara Energy Ltd,310.0,Refining Margin Expansion Quote,Oil Refining & Petrochemicals,10.0
+2023-10-12,NAYARA_ENERGY,Nayara Energy Ltd,275.0,Secondary Market Quote,Oil Refining & Petrochemicals,10.0
+2024-06-25,NAYARA_ENERGY,Nayara Energy Ltd,330.0,Secondary Market Quote,Oil Refining & Petrochemicals,10.0
+2026-09-18,NAYARA_ENERGY,Nayara Energy Ltd,360.0,Current Indicative Market Quote,Oil Refining & Petrochemicals,10.0
+2019-04-10,NSDL,National Securities Depository Ltd,280.0,Secondary Market Quote,Market Infrastructure / Depository,2.0
+2020-10-12,NSDL,National Securities Depository Ltd,420.0,Secondary Market Quote,Market Infrastructure / Depository,2.0
+2021-08-15,NSDL,National Securities Depository Ltd,650.0,Demat Account Surge Valuation,Market Infrastructure / Depository,2.0
+2022-11-20,NSDL,National Securities Depository Ltd,580.0,Secondary Market Quote,Market Infrastructure / Depository,2.0
+2023-07-10,NSDL,National Securities Depository Ltd,750.0,DRHP Filing Announcement,Market Infrastructure / Depository,2.0
+2024-06-18,NSDL,National Securities Depository Ltd,950.0,SEBI IPO Clearance Momentum,Market Infrastructure / Depository,2.0
+2026-09-18,NSDL,National Securities Depository Ltd,1150.0,Current Indicative Market Quote,Market Infrastructure / Depository,2.0
+2019-01-15,NSE,National Stock Exchange of India Ltd,950.0,Secondary Market Quote,Exchange / Financial Market Infrastructure,1.0
+2019-08-20,NSE,National Stock Exchange of India Ltd,1050.0,Institutional Block Transfer,Exchange / Financial Market Infrastructure,1.0
+2020-03-25,NSE,National Stock Exchange of India Ltd,980.0,Secondary Market Quote,Exchange / Financial Market Infrastructure,1.0
+2020-11-10,NSE,National Stock Exchange of India Ltd,1850.0,Secondary Market Quote,Exchange / Financial Market Infrastructure,1.0
+2021-06-15,NSE,National Stock Exchange of India Ltd,3200.0,Secondary Market Quote,Exchange / Financial Market Infrastructure,1.0
+2021-12-28,NSE,National Stock Exchange of India Ltd,4200.0,Year-End Indicative Valuation,Exchange / Financial Market Infrastructure,1.0
+2022-09-15,NSE,National Stock Exchange of India Ltd,3100.0,Secondary Market Quote,Exchange / Financial Market Infrastructure,1.0
+2023-05-20,NSE,National Stock Exchange of India Ltd,3800.0,Secondary Market Quote,Exchange / Financial Market Infrastructure,1.0
+2023-12-15,NSE,National Stock Exchange of India Ltd,4400.0,Pre-IPO Secondary Round,Exchange / Financial Market Infrastructure,1.0
+2024-04-10,NSE,National Stock Exchange of India Ltd,5400.0,Secondary Market Quote,Exchange / Financial Market Infrastructure,1.0
+2024-09-15,NSE,National Stock Exchange of India Ltd,6200.0,Bonus Issue Consideration,Exchange / Financial Market Infrastructure,1.0
+2025-06-20,NSE,National Stock Exchange of India Ltd,6800.0,Secondary Market Quote,Exchange / Financial Market Infrastructure,1.0
+2026-09-18,NSE,National Stock Exchange of India Ltd,7400.0,Current Indicative Market Quote,Exchange / Financial Market Infrastructure,1.0
+2019-06-18,ORBIS_FIN,Orbis Financial Corporation Ltd,28.0,Secondary Dealer Quote,Custody & Clearing Financials,10.0
+2021-03-12,ORBIS_FIN,Orbis Financial Corporation Ltd,55.0,Preferential Allotment,Custody & Clearing Financials,10.0
+2022-08-20,ORBIS_FIN,Orbis Financial Corporation Ltd,95.0,Secondary Market Quote,Custody & Clearing Financials,10.0
+2023-12-05,ORBIS_FIN,Orbis Financial Corporation Ltd,135.0,Private Placement (PAS-3 Filing),Custody & Clearing Financials,10.0
+2024-07-15,ORBIS_FIN,Orbis Financial Corporation Ltd,240.0,Earnings Surge / Secondary Quote,Custody & Clearing Financials,10.0
+2026-09-18,ORBIS_FIN,Orbis Financial Corporation Ltd,305.0,Current Indicative Market Quote,Custody & Clearing Financials,10.0
+2019-09-10,OYO,Oravel Stays Ltd (OYO),95.0,SoftBank Series F Valuation Benchmark,Hospitality & TravelTech,1.0
+2021-08-15,OYO,Oravel Stays Ltd (OYO),110.0,Pre-IPO Secondary Buying Wave,Hospitality & TravelTech,1.0
+2022-10-20,OYO,Oravel Stays Ltd (OYO),65.0,IPO Refiling Delay Impact,Hospitality & TravelTech,1.0
+2023-11-15,OYO,Oravel Stays Ltd (OYO),55.0,Secondary Market Quote,Hospitality & TravelTech,1.0
+2024-07-25,OYO,Oravel Stays Ltd (OYO),42.0,Refinancing Valuation Round,Hospitality & TravelTech,1.0
+2026-09-18,OYO,Oravel Stays Ltd (OYO),48.0,Current Indicative Market Quote,Hospitality & TravelTech,1.0
+2021-04-15,PHARMEASY,API Holdings Ltd (PharmEasy),55.0,Pre-IPO Valuation High,HealthTech / E-Pharmacy,1.0
+2021-10-20,PHARMEASY,API Holdings Ltd (PharmEasy),130.0,Thyrocare Acquisition Peak,HealthTech / E-Pharmacy,1.0
+2022-09-18,PHARMEASY,API Holdings Ltd (PharmEasy),45.0,Tech Valuation Reset,HealthTech / E-Pharmacy,1.0
+2023-08-25,PHARMEASY,API Holdings Ltd (PharmEasy),11.5,"Rights Issue Downround (₹3,500 Cr)",HealthTech / E-Pharmacy,1.0
+2024-06-15,PHARMEASY,API Holdings Ltd (PharmEasy),8.5,Secondary Market Quote,HealthTech / E-Pharmacy,1.0
+2026-09-18,PHARMEASY,API Holdings Ltd (PharmEasy),12.0,Current Indicative Market Quote,HealthTech / E-Pharmacy,1.0
+2022-04-10,POLYMATECH,Polymatech Electronics Ltd,280.0,Semiconductor PLI Announcement,Semiconductor / Opto-Electronics,10.0
+2023-02-15,POLYMATECH,Polymatech Electronics Ltd,450.0,Secondary Dealer Quote,Semiconductor / Opto-Electronics,10.0
+2023-11-20,POLYMATECH,Polymatech Electronics Ltd,720.0,DRHP Filing Speculation,Semiconductor / Opto-Electronics,10.0
+2024-05-12,POLYMATECH,Polymatech Electronics Ltd,890.0,Secondary Market Quote,Semiconductor / Opto-Electronics,10.0
+2026-09-18,POLYMATECH,Polymatech Electronics Ltd,980.0,Current Indicative Market Quote,Semiconductor / Opto-Electronics,10.0
+2019-03-15,RELIANCE_RETAIL,Reliance Retail Ltd,480.0,Secondary Dealer Quote,Retail / Consumer,10.0
+2019-11-20,RELIANCE_RETAIL,Reliance Retail Ltd,750.0,Share Swap Valuation,Retail / Consumer,10.0
+2020-09-10,RELIANCE_RETAIL,Reliance Retail Ltd,1250.0,Silver Lake / KKR Strategic Round,Retail / Consumer,10.0
+2021-08-15,RELIANCE_RETAIL,Reliance Retail Ltd,1950.0,Secondary Market Quote,Retail / Consumer,10.0
+2022-06-10,RELIANCE_RETAIL,Reliance Retail Ltd,2700.0,Secondary Market Quote,Retail / Consumer,10.0
+2023-07-08,RELIANCE_RETAIL,Reliance Retail Ltd,1362.0,Capital Reduction Offer Valuation,Retail / Consumer,10.0
+2024-03-15,RELIANCE_RETAIL,Reliance Retail Ltd,2850.0,Secondary Market Quote,Retail / Consumer,10.0
+2026-09-18,RELIANCE_RETAIL,Reliance Retail Ltd,3150.0,Current Indicative Market Quote,Retail / Consumer,10.0
+2019-07-15,STERLITE_POWER,Sterlite Power Transmission Ltd,210.0,Secondary Market Quote,Power Infrastructure & Transmission,2.0
+2020-11-20,STERLITE_POWER,Sterlite Power Transmission Ltd,260.0,Secondary Market Quote,Power Infrastructure & Transmission,2.0
+2021-09-10,STERLITE_POWER,Sterlite Power Transmission Ltd,480.0,Pre-IPO Filing Speculation,Power Infrastructure & Transmission,2.0
+2022-08-15,STERLITE_POWER,Sterlite Power Transmission Ltd,540.0,Secondary Dealer Quote,Power Infrastructure & Transmission,2.0
+2023-12-20,STERLITE_POWER,Sterlite Power Transmission Ltd,680.0,De-merger Scheme Announcement,Power Infrastructure & Transmission,2.0
+2024-07-12,STERLITE_POWER,Sterlite Power Transmission Ltd,820.0,Secondary Market Quote,Power Infrastructure & Transmission,2.0
+2026-09-18,STERLITE_POWER,Sterlite Power Transmission Ltd,890.0,Current Indicative Market Quote,Power Infrastructure & Transmission,2.0
+2019-06-15,STUDDS,Studds Accessories Ltd,850.0,Secondary Dealer Quote,Auto Components / Helmets,5.0
+2020-12-10,STUDDS,Studds Accessories Ltd,1450.0,Pre-IPO Secondary Surge,Auto Components / Helmets,5.0
+2022-04-18,STUDDS,Studds Accessories Ltd,950.0,Two-Wheeler Slowdown Pullback,Auto Components / Helmets,5.0
+2023-08-15,STUDDS,Studds Accessories Ltd,820.0,Secondary Market Quote,Auto Components / Helmets,5.0
+2024-05-20,STUDDS,Studds Accessories Ltd,880.0,Secondary Market Quote,Auto Components / Helmets,5.0
+2026-09-18,STUDDS,Studds Accessories Ltd,960.0,Current Indicative Market Quote,Auto Components / Helmets,5.0
+2020-04-06,SWIGGY,Swiggy Ltd (Bundl Technologies),180.0,Series I Funding Valuation,Quick Commerce & Food Delivery,1.0
+2021-07-20,SWIGGY,Swiggy Ltd (Bundl Technologies),310.0,SoftBank Invesco Round ($5.5B),Quick Commerce & Food Delivery,1.0
+2022-01-24,SWIGGY,Swiggy Ltd (Bundl Technologies),460.0,Invesco Valuation Peak ($10.7B),Quick Commerce & Food Delivery,1.0
+2023-05-15,SWIGGY,Swiggy Ltd (Bundl Technologies),280.0,Global Tech Multiples Compression,Quick Commerce & Food Delivery,1.0
+2024-03-20,SWIGGY,Swiggy Ltd (Bundl Technologies),350.0,Pre-IPO Secondary Round,Quick Commerce & Food Delivery,1.0
+2024-10-15,SWIGGY,Swiggy Ltd (Bundl Technologies),390.0,Pre-Listing Anchor Allotment Benchmark,Quick Commerce & Food Delivery,1.0
+2019-02-10,TATA_CAPITAL,Tata Capital Ltd,95.0,Secondary Dealer Quote,Financial Services / NBFC,10.0
+2020-01-15,TATA_CAPITAL,Tata Capital Ltd,115.0,Secondary Market Quote,Financial Services / NBFC,10.0
+2021-04-20,TATA_CAPITAL,Tata Capital Ltd,180.0,Secondary Market Quote,Financial Services / NBFC,10.0
+2022-10-15,TATA_CAPITAL,Tata Capital Ltd,380.0,Secondary Market Quote,Financial Services / NBFC,10.0
+2023-08-22,TATA_CAPITAL,Tata Capital Ltd,540.0,Tata Sons Internal Valuation,Financial Services / NBFC,10.0
+2024-06-12,TATA_CAPITAL,Tata Capital Ltd,875.0,Mandatory IPO Preparation Surge,Financial Services / NBFC,10.0
+2026-09-18,TATA_CAPITAL,Tata Capital Ltd,960.0,Current Indicative Market Quote,Financial Services / NBFC,10.0
+2020-09-15,TATA_TECH,Tata Technologies Ltd,110.0,Secondary Market Quote,ER&D Services / IT,2.0
+2021-06-20,TATA_TECH,Tata Technologies Ltd,220.0,Secondary Market Quote,ER&D Services / IT,2.0
+2022-03-15,TATA_TECH,Tata Technologies Ltd,480.0,IPO Exploration Rumours,ER&D Services / IT,2.0
+2022-12-10,TATA_TECH,Tata Technologies Ltd,620.0,Secondary Dealer Quote,ER&D Services / IT,2.0
+2023-04-18,TATA_TECH,Tata Technologies Ltd,850.0,DRHP Filing Frenzy,ER&D Services / IT,2.0
+2023-10-15,TATA_TECH,Tata Technologies Ltd,1050.0,Pre-IPO Gray Market Benchmark (Pre-Nov 2023 Listing),ER&D Services / IT,2.0
+2021-10-15,WAAREE_ENER,Waaree Energies Ltd,220.0,Private Placement / Unlisted Trading,Solar Energy & CleanTech,10.0
+2022-09-10,WAAREE_ENER,Waaree Energies Ltd,650.0,Solar Order Book Surge,Solar Energy & CleanTech,10.0
+2023-08-20,WAAREE_ENER,Waaree Energies Ltd,1200.0,Strategic Pre-IPO Funding ($120M),Solar Energy & CleanTech,10.0
+2024-05-15,WAAREE_ENER,Waaree Energies Ltd,1900.0,DRHP Filing Rally,Solar Energy & CleanTech,10.0
+2024-09-30,WAAREE_ENER,Waaree Energies Ltd,2450.0,Pre-IPO Gray Market Benchmark (Pre-Oct 2024 Listing),Solar Energy & CleanTech,10.0
+2022-05-02,ZEPTO,KiranaKart Technologies (Zepto),420.0,Series D ($200M @ $900M valuation),Quick Commerce,1.0
+2023-08-25,ZEPTO,KiranaKart Technologies (Zepto),650.0,Series E Unicorn Round ($1.4B valuation),Quick Commerce,1.0
+2024-06-21,ZEPTO,KiranaKart Technologies (Zepto),1150.0,Series F Round ($665M @ $3.6B valuation),Quick Commerce,1.0
+2024-08-30,ZEPTO,KiranaKart Technologies (Zepto),1550.0,Top-up Round ($340M @ $5.0B valuation),Quick Commerce,1.0
+2026-09-18,ZEPTO,KiranaKart Technologies (Zepto),1820.0,Current Indicative Market Quote,Quick Commerce,1.0

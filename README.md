@@ -26,7 +26,7 @@ A free, open dataset of **complete daily historical stock price data** (NSE & BS
 ### Unlisted & Pre-IPO Equities
 | Universe | Companies Tracked | Format | Date Range | Valuation Milestones & Quotes |
 |----------|-------------------|--------|------------|-------------------------------|
-| **Top Indian Unlisted / Pre-IPO** | **22 companies** (NSE, Reliance Retail, Tata Capital, HDB Financial, NSDL, Swiggy, boAt, CSK, Zepto, etc.) | `data/UNLISTED/unlisted_shares.parquet` | 2019 → Present | **145 milestone records** |
+| **Top Indian Unlisted / Pre-IPO** | **22 companies** (NSE, Reliance Retail, Tata Capital, HDB Financial, NSDL, Swiggy, boAt, CSK, Zepto, etc.) | `data/UNLISTED/unlisted_shares.parquet`<br>`data/UNLISTED/unlisted_shares.csv` | 2019 → Present | **145 milestone records** |
 
 - **Total stock files:** ~6,976
 - **Total commodities files:** 2
@@ -102,7 +102,8 @@ data/
 │   ├── nav_part_0.parquet    # Historical NAV from inception partitioned by schemeCode % 10
 │   └── ... (nav_part_0 .. nav_part_9.parquet)
 └── UNLISTED/
-    └── unlisted_shares.parquet # Historical valuations & quotes (2019 - Present) for top 22 unlisted firms
+    ├── unlisted_shares.parquet # Historical valuations & quotes (2019 - Present) for top 22 unlisted firms
+    └── unlisted_shares.csv     # Plain CSV version for easy spreadsheet / Excel inspection
 scripts/
 ├── fetch_all_stocks.py       # One-time full history bootstrap
 ├── update_stocks.py          # Daily incremental updater

@@ -32,6 +32,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 UNLISTED_DIR = ROOT_DIR / "data" / "UNLISTED"
 UNLISTED_DIR.mkdir(parents=True, exist_ok=True)
 OUTPUT_FILE = UNLISTED_DIR / "unlisted_shares.parquet"
+OUTPUT_CSV = UNLISTED_DIR / "unlisted_shares.csv"
 
 # Historical valuation milestones & dealer indicative price records (2019 to Present)
 UNLISTED_RECORDS = [
@@ -232,17 +233,19 @@ def build_dataset():
     df.sort_values(by=["symbol", "date"], inplace=True)
     
     df.to_parquet(OUTPUT_FILE, engine="pyarrow", compression="snappy", index=False)
-    size_kb = OUTPUT_FILE.stat().st_size / 1024
+    df.to_csv(OUTPUT_CSV, index=False)
+    size_parquet_kb = OUTPUT_FILE.stat().st_size / 1024
+    size_csv_kb = OUTPUT_CSV.stat().st_size / 1024
     
     unique_cos = df["symbol"].nunique()
     min_date = df["date"].min().date()
     max_date = df["date"].max().date()
     
-    print(f"✓ Saved: {OUTPUT_FILE}")
+    print(f"✓ Saved Parquet: {OUTPUT_FILE} ({size_parquet_kb:.2f} KB)")
+    print(f"✓ Saved CSV    : {OUTPUT_CSV} ({size_csv_kb:.2f} KB)")
     print(f"  Companies Covered: {unique_cos}")
     print(f"  Total Historical Milestone Quotes: {len(df):,}")
     print(f"  Timeline: {min_date} to {max_date}")
-    print(f"  File Size: {size_kb:.2f} KB")
 
 if __name__ == "__main__":
     build_dataset()

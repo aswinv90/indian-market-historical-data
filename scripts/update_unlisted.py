@@ -20,6 +20,7 @@ import pandas as pd
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 UNLISTED_FILE = ROOT_DIR / "data" / "UNLISTED" / "unlisted_shares.parquet"
+UNLISTED_CSV = ROOT_DIR / "data" / "UNLISTED" / "unlisted_shares.csv"
 
 
 def inspect_dataset():
@@ -82,7 +83,8 @@ def add_record(symbol: str, date: str, price: float, event: str, company: str = 
     df.drop_duplicates(subset=["symbol", "date", "event"], keep="last", inplace=True)
 
     df.to_parquet(UNLISTED_FILE, engine="pyarrow", compression="snappy", index=False)
-    print(f"✓ Successfully added {symbol.upper()} record ({date} - ₹{price}) to {UNLISTED_FILE}")
+    df.to_csv(UNLISTED_CSV, index=False)
+    print(f"✓ Successfully added {symbol.upper()} record ({date} - ₹{price}) to Parquet & CSV")
 
 
 def main():
