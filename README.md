@@ -1,12 +1,12 @@
-# 📈 Indian Historical Stock Prices, Commodities & Mutual Funds
+# 📈 Indian Historical Stock Prices, Commodities, Mutual Funds & Unlisted Shares
 
-A free, open dataset of **complete daily historical stock price data** (NSE & BSE), **50+ years of historical Gold & Silver bullion rates**, and **complete daily NAV history of all Indian Mutual Funds from inception** — updated automatically every market working day.
+A free, open dataset of **complete daily historical stock price data** (NSE & BSE), **50+ years of historical Gold & Silver bullion rates**, **complete daily NAV history of all Indian Mutual Funds from inception**, and **historical valuations of major Indian Unlisted / Pre-IPO shares (2019 → Present)** — updated automatically every market working day.
 
 ---
 
 ## 📦 Coverage
 
-### Equities
+### Equities (Listed)
 | Exchange | Stocks | Ticker Format | Date Range |
 |----------|--------|---------------|------------|
 | NSE | ~2,577 | `SYMBOL_NS.parquet` (e.g. `RELIANCE_NS.parquet`) | 1991 → Present |
@@ -23,9 +23,15 @@ A free, open dataset of **complete daily historical stock price data** (NSE & BS
 |----------|-----------------|--------|------------|---------------------|
 | **All Indian Mutual Funds** | **37,896 schemes** | `data/MF/nav_part_0..9.parquet` | Inception → Present | **35,358,852 records** |
 
+### Unlisted & Pre-IPO Equities
+| Universe | Companies Tracked | Format | Date Range | Valuation Milestones & Quotes |
+|----------|-------------------|--------|------------|-------------------------------|
+| **Top Indian Unlisted / Pre-IPO** | **22 companies** (NSE, Reliance Retail, Tata Capital, HDB Financial, NSDL, Swiggy, boAt, CSK, Zepto, etc.) | `data/UNLISTED/unlisted_shares.parquet` | 2019 → Present | **145 milestone records** |
+
 - **Total stock files:** ~6,976
 - **Total commodities files:** 2
 - **Total mutual fund partitions:** 10 + 1 master index
+- **Total unlisted shares datasets:** 1 unified master file
 - **Total dataset size:** ~1.02 GB
 
 ---
@@ -64,6 +70,15 @@ Each stock Parquet file contains daily records with the following columns:
   * `schemeCode`: Unique numerical scheme code
   * `nav`: Daily Net Asset Value (₹)
 
+### Unlisted & Pre-IPO Equities (`data/UNLISTED/unlisted_shares.parquet`)
+* `date`: Benchmark transaction or quote date
+* `symbol`: Standardized identifier (e.g. `NSE`, `RELIANCE_RETAIL`, `TATA_CAPITAL`, `HDB_FINANCIAL`, `BOAT`, `CSK`, `ZEPTO`)
+* `company`: Full legal entity name
+* `price`: Indicative price or round valuation per share (₹)
+* `event`: Nature of valuation milestone (e.g., *Secondary Market Quote*, *Strategic Funding Round*, *Capital Reduction Valuation*, *De-merger Scheme*)
+* `sector`: Industry sector
+* `face_value`: Face value per share (₹)
+
 ---
 
 ## 📁 Repository Structure
@@ -82,15 +97,19 @@ data/
 ├── COMMODITIES/
 │   ├── GOLD_INR.parquet      # 50+ yrs (1970 - present) 24K, 22K, 18K in ₹/10g & ₹/1g
 │   └── SILVER_INR.parquet    # 50+ yrs (1970 - present) 999 & 925 in ₹/kg, 10g & 1g
-└── MF/
-    ├── mf_meta.parquet       # Master scheme catalog of all 37,896 mutual fund schemes
-    ├── nav_part_0.parquet    # Historical NAV from inception partitioned by schemeCode % 10
-    └── ... (nav_part_0 .. nav_part_9.parquet)
+├── MF/
+│   ├── mf_meta.parquet       # Master scheme catalog of all 37,896 mutual fund schemes
+│   ├── nav_part_0.parquet    # Historical NAV from inception partitioned by schemeCode % 10
+│   └── ... (nav_part_0 .. nav_part_9.parquet)
+└── UNLISTED/
+    └── unlisted_shares.parquet # Historical valuations & quotes (2019 - Present) for top 22 unlisted firms
 scripts/
 ├── fetch_all_stocks.py       # One-time full history bootstrap
 ├── update_stocks.py          # Daily incremental updater
 ├── update_commodities.py     # Daily commodities updater (Gold & Silver)
 ├── update_mf.py              # Daily mutual funds NAV updater
+├── build_unlisted.py         # Full compiler for unlisted equity valuations (2019 - Present)
+├── update_unlisted.py        # Maintenance and updater for unlisted equity valuations
 ├── verify_data.py            # Data quality checker
 ├── download_symbol_lists.py  # Refresh stock symbol master lists
 └── utils.py                  # Shared helpers
@@ -137,6 +156,10 @@ part_file = f"data/MF/nav_part_{scheme_code % 10}.parquet"
 df_nav = pd.read_parquet(part_file)
 fund_history = df_nav[df_nav["schemeCode"] == scheme_code].set_index("date")
 print(fund_history.tail())
+
+# Unlisted & Pre-IPO Equities (Valuation Milestones & Dealer Quotes)
+unlisted = pd.read_parquet("data/UNLISTED/unlisted_shares.parquet")
+print(unlisted[unlisted["symbol"] == "NSE"][["date", "price", "event"]])
 ```
 
 ### Query a specific date
