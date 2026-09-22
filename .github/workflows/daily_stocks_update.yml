@@ -2,8 +2,8 @@ name: Daily Stock Price Update (NSE & BSE)
 
 on:
   schedule:
-    # Runs every day at 15:45 UTC = 09:15 PM IST
-    - cron: '45 15 * * *'
+    # Runs every day at 16:00 UTC = 09:30 PM IST
+    - cron: '0 16 * * *'
 
   workflow_dispatch:
 

@@ -152,8 +152,8 @@ scripts/
 ├── daily_mf_update.yml          # 09:00 PM IST — Mutual Funds NAV from inception
 ├── daily_commodities_update.yml # 09:05 PM IST — Gold & Silver bullion spot rates
 ├── daily_unlisted_update.yml    # 09:10 PM IST — Top 22 unlisted / pre-IPO equities
-├── daily_indices_update.yml     # 09:12 PM IST — Benchmark & Sectoral indices
-└── daily_stocks_update.yml      # 09:15 PM IST — NSE & BSE stocks (with circuit breaker)
+├── daily_indices_update.yml     # 09:15 PM IST — Benchmark & Sectoral indices
+└── daily_stocks_update.yml      # 09:30 PM IST — NSE & BSE stocks (with circuit breaker)
 ```
 
 ---
@@ -256,12 +256,12 @@ Data is automatically updated strictly on **Indian Market Working Days** (NSE & 
 | `daily_mf_update.yml` | **Mutual Funds (Daily NAV)** | **9:00 PM IST** (15:30 UTC) | ~35 seconds | AMFI direct fetch; 100% independent |
 | `daily_commodities_update.yml` | **Commodities (Gold & Silver)** | **9:05 PM IST** (15:35 UTC) | ~10 seconds | Bullion spot rates; 100% independent |
 | `daily_unlisted_update.yml` | **Unlisted & Pre-IPO Equities** | **9:10 PM IST** (15:40 UTC) | ~5 seconds | Indicative milestones; 100% independent |
-| `daily_indices_update.yml` | **Benchmark & Sectoral Indices** | **9:12 PM IST** (15:42 UTC) | ~5 seconds | Key indices & India VIX; 100% independent |
-| `daily_stocks_update.yml` | **Equities (NSE & BSE)** | **9:15 PM IST** (15:45 UTC) | ~30–50 minutes | Built-in circuit breaker & cooldown; 90m cap |
+| `daily_indices_update.yml` | **Benchmark & Sectoral Indices** | **9:15 PM IST** (15:45 UTC) | ~5 seconds | Key indices & India VIX; 100% independent |
+| `daily_stocks_update.yml` | **Equities (NSE & BSE)** | **9:30 PM IST** (16:00 UTC) | ~30–50 minutes | Built-in circuit breaker & cooldown; 90m cap |
 
 > **Zero Blast Radius:** Because each asset class runs in its own dedicated workflow, a delay or rate limit in stock fetching has zero impact on Mutual Funds, Commodities, or Indices. NAVs, bullion prices, and indices are committed and available immediately every evening.
 >
-> **Weekend Readiness:** Running on the same evening between 9:00 PM and 9:15 PM IST ensures that all Friday closing prices and weekend Muhurat sessions are committed and available immediately for researchers, portfolio backtesters, and weekend users throughout Saturday and Sunday.
+> **Weekend Readiness:** Running on the same evening between 9:00 PM and 9:30 PM IST ensures that all Friday closing prices and weekend Muhurat sessions are committed and available immediately for researchers, portfolio backtesters, and weekend users throughout Saturday and Sunday.
 >
 > **Trading Holiday Gate:** The automated pipeline evaluates exchange holiday calendars. If a day is a declared market holiday (e.g. Republic Day, Holi, etc.), the run safely exits without producing empty commits.
 >

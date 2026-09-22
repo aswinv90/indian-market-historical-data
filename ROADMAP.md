@@ -22,7 +22,7 @@ This document outlines the architectural roadmap for **`indian-market-historical
 - [x] **Core Benchmarks:** `NIFTY_50` (^NSEI), `SENSEX` (^BSESN), `NIFTY_100` (^CNX100), `NIFTY_200` (^CNX200), `NIFTY_500` (^CRSLDX), `NIFTY_MIDCAP_50` (^NSEMDCP50)
 - [x] **Key Sectorals:** `NIFTY_BANK` (^NSEBANK), `NIFTY_IT` (^CNXIT), `NIFTY_PHARMA` (^CNXPHARMA)
 - [x] **Market Volatility:** `INDIA_VIX` (^INDIAVIX)
-- [x] **Dedicated Daily Workflow:** Staggered at 09:12 PM IST prior to stocks update.
+- [x] **Dedicated Daily Workflow:** Staggered at 09:15 PM IST prior to stocks update.
 
 ---
 
