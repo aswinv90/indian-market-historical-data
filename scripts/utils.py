@@ -26,6 +26,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT_DIR / "data"
 NSE_DIR  = DATA_DIR / "NSE"
 BSE_DIR  = DATA_DIR / "BSE"
+INDICES_DIR = DATA_DIR / "INDICES"
 
 NSE_SYMBOL_FILE = ROOT_DIR / "stock_list_nse.csv"
 BSE_SYMBOL_FILE = ROOT_DIR / "stock_list_bse.csv"
