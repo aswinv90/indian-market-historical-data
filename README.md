@@ -324,17 +324,6 @@ If you need bulk access, clone the repository locally instead of fetching indivi
 
 ---
 
-## 🗺️ Roadmap & Upcoming Targets
-
-See [**ROADMAP.md**](ROADMAP.md) for full project milestones, including upcoming additions:
-- 📜 **Corporate Actions:** Consolidated Bonus, Splits, and Dividend histories
-- 💼 **Institutional Flows:** Daily FII / DII net cash & derivatives positioning
-- 🏛️ **Macro & Fixed Income:** 10Y G-Sec Yield, RBI Repo Rates, Forex (USD/INR), CPI Inflation
-- 🪙 **Sovereign Gold Bonds:** Complete SGB tranche issue & redemption history
-- 🚀 **Python SDK:** `pip install indian-market-data` for 1-line Python access
-
----
-
 ## ☕ Support & Sponsorship
 
 If this free, open dataset saves you time, powers your research, or assists your financial modeling, consider supporting its daily server bandwidth and ongoing maintenance:

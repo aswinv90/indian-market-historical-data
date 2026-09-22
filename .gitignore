@@ -17,3 +17,6 @@ logs/
 # Temp files
 *.tmp
 failed_tickers.txt
+
+# Personal local targets
+ROADMAP.md
