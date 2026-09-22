@@ -26,11 +26,10 @@ This document outlines the architectural roadmap for **`indian-market-historical
 
 ---
 
-### Phase 2: Macroeconomic & Fixed Income Indicators 🏛️
-- **10-Year Indian Government Bond Yield (G-Sec 10Y):** Benchmark risk-free rate for financial valuation and CAPM models.
-- **RBI Policy Rates History:** Historical repo rate, reverse repo rate, CRR, and SLR changes.
-- **Foreign Exchange Rates:** Daily historical `USD/INR`, `EUR/INR`, `GBP/INR`, and `JPY/INR`.
-- **Consumer Price Index (CPI):** Monthly headline and core retail inflation rates.
+### Phase 2: Corporate Actions Master Catalog 📜
+- **Unified Corporate Actions Table:**
+  - Ex-date, record date, company symbol, action type (Stock Split, Bonus Issue, Demerger, Rights Issue, Dividend amount).
+  - Consolidated cross-exchange historical reference file.
 
 ---
 
@@ -40,10 +39,11 @@ This document outlines the architectural roadmap for **`indian-market-historical
 
 ---
 
-### Phase 4: Corporate Actions Master Catalog 📜
-- **Unified Corporate Actions Table:**
-  - Ex-date, record date, company symbol, action type (Stock Split, Bonus Issue, Demerger, Rights Issue, Dividend amount).
-  - Consolidated cross-exchange historical reference file.
+### Phase 4: Macroeconomic & Fixed Income Indicators 🏛️
+- **10-Year Indian Government Bond Yield (G-Sec 10Y):** Benchmark risk-free rate for financial valuation and CAPM models.
+- **RBI Policy Rates History:** Historical repo rate, reverse repo rate, CRR, and SLR changes.
+- **Foreign Exchange Rates:** Daily historical `USD/INR`, `EUR/INR`, `GBP/INR`, and `JPY/INR`.
+- **Consumer Price Index (CPI):** Monthly headline and core retail inflation rates.
 
 ---
 

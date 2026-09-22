@@ -290,10 +290,10 @@ If you need bulk access, clone the repository locally instead of fetching indivi
 ## 🗺️ Roadmap & Upcoming Targets
 
 See [**ROADMAP.md**](ROADMAP.md) for full project milestones, including upcoming additions:
-- 📊 **Market & Sectoral Indices:** Nifty 50, Sensex, Bank Nifty, Midcap 150, India VIX
-- 🏛️ **Macro & Fixed Income:** 10Y G-Sec Yield, RBI Repo Rates, Forex (USD/INR), CPI Inflation
-- 💼 **Institutional Flows:** Daily FII / DII net cash & derivatives positioning
 - 📜 **Corporate Actions:** Consolidated Bonus, Splits, and Dividend histories
+- 💼 **Institutional Flows:** Daily FII / DII net cash & derivatives positioning
+- 🏛️ **Macro & Fixed Income:** 10Y G-Sec Yield, RBI Repo Rates, Forex (USD/INR), CPI Inflation
+- 🪙 **Sovereign Gold Bonds:** Complete SGB tranche issue & redemption history
 - 🚀 **Python SDK:** `pip install indian-market-data` for 1-line Python access
 
 ---
