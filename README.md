@@ -1,6 +1,6 @@
-# 📈 Indian Historical Stock Prices, Indices, Commodities, Mutual Funds & Unlisted Shares
+# 📈 Indian Historical Stock Prices, Indices, Corporate Actions, Commodities, Mutual Funds & Unlisted Shares
 
-A free, open dataset of **complete daily historical stock price data** (NSE & BSE), **major benchmark and sectoral indices** (NIFTY 50, SENSEX, etc.), **50+ years of historical Gold & Silver bullion rates**, **complete daily NAV history of all Indian Mutual Funds from inception**, and **historical valuations of major Indian Unlisted / Pre-IPO shares (2019 → Present)** — updated automatically every market working day.
+A free, open dataset of **complete daily historical stock price data** (NSE & BSE), **major benchmark and sectoral indices** (NIFTY 50, SENSEX, etc.), **comprehensive corporate actions master catalog** (Bonus, Splits, Dividends, Rights, Demergers 1990 → Present), **50+ years of historical Gold & Silver bullion rates**, **complete daily NAV history of all Indian Mutual Funds from inception**, and **historical valuations of major Indian Unlisted / Pre-IPO shares (2019 → Present)** — updated automatically every market working day.
 
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support%20Project-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/aswinv)
 
@@ -28,6 +28,11 @@ A free, open dataset of **complete daily historical stock price data** (NSE & BS
 | **NIFTY 500** | `^CRSLDX` | Broad Market | `NIFTY_500.parquet` | 2005 → Present | ~5,162 records |
 | **NIFTY MIDCAP 50** | `^NSEMDCP50` | Broad Market | `NIFTY_MIDCAP_50.parquet` | 2007 → Present | ~4,633 records |
 
+### Corporate Actions (Master Catalog)
+| Category | Events Tracked | Format | Date Range | Total Catalog Records |
+|----------|----------------|--------|------------|-----------------------|
+| **All Listed Equities** | **Bonus Issues, Stock Splits, Dividends, Rights, Buybacks, Demergers** | `data/CORPORATE_ACTIONS/corporate_actions.parquet`<br>`data/CORPORATE_ACTIONS/corporate_actions.csv` | 1990 → Present & Upcoming Announced | **43,748 events** |
+
 ### Commodities (Bullion)
 | Commodity | Coverage & Purities | Format | Date Range |
 |-----------|---------------------|--------|------------|
@@ -46,10 +51,11 @@ A free, open dataset of **complete daily historical stock price data** (NSE & BS
 
 - **Total stock files:** ~6,976
 - **Total index files:** 10 + 1 master catalog
+- **Total corporate actions catalog:** 43,748 events (Parquet + CSV)
 - **Total commodities files:** 2
 - **Total mutual fund partitions:** 10 + 1 master index
 - **Total unlisted shares datasets:** 1 unified master file
-- **Total dataset size:** ~1.03 GB
+- **Total dataset size:** ~1.04 GB
 
 ---
 
@@ -77,6 +83,20 @@ Each stock Parquet file contains daily records with the following columns:
   * `Volume`: Total index volume / turnover
 * **Index Catalog (`data/INDICES/index_list.csv`):**
   * `Symbol`, `Ticker`, `Name`, `Exchange`, `Category`, `Description`, `Start_Date`, `End_Date`, `Total_Records`, `Parquet_File`
+
+### Corporate Actions Master Catalog (`data/CORPORATE_ACTIONS/`)
+* **Master Datasets:** `data/CORPORATE_ACTIONS/corporate_actions.parquet` & `corporate_actions.csv`
+* `Ex_Date`: Ex-benefit trading cutoff date (`YYYY-MM-DD`)
+* `Record_Date`: Shareholder entitlement eligibility date (`YYYY-MM-DD`)
+* `Symbol`: Stock trading symbol (e.g. `RELIANCE`, `TCS`, `INFY`)
+* `Company_Name`: Full legal corporate name
+* `Series`: Equity series (`EQ`, `BE`, `SM`)
+* `Action_Type`: Normalized classification (`BONUS`, `SPLIT`, `DIVIDEND`, `RIGHTS`, `BUYBACK`, `DEMERGER`, `CAPITAL_REDUCTION`, `MEETING`, `INTEREST`, `OTHER`)
+* `Ratio_or_Amount`: Extracted benefit ratio or cash payout (e.g. `1:1`, `10:2`, `10:1`, `37.00`)
+* `Purpose`: Raw official disclosure description
+* `Face_Value`: Face value per share (₹)
+* `ISIN`: International Securities Identification Number
+* `BC_Start_Date`, `BC_End_Date`: Book closure dates
 
 ### Commodities (Gold & Silver)
 * **Gold (`data/COMMODITIES/GOLD_INR.parquet`):**
@@ -126,6 +146,9 @@ data/
 │   ├── NIFTY_BANK.parquet    # Top liquid Indian banking stocks
 │   ├── INDIA_VIX.parquet     # Implied volatility index (Fear Gauge)
 │   └── ... (10 major indices)
+├── CORPORATE_ACTIONS/
+│   ├── corporate_actions.parquet # 43,700+ corporate actions (1990 - present & upcoming)
+│   └── corporate_actions.csv     # Complete tabular catalog for spreadsheet inspection
 ├── COMMODITIES/
 │   ├── GOLD_INR.parquet      # 50+ yrs (1970 - present) 24K, 22K, 18K in ₹/10g & ₹/1g
 │   └── SILVER_INR.parquet    # 50+ yrs (1970 - present) 999 & 925 in ₹/kg, 10g & 1g
@@ -137,23 +160,26 @@ data/
     ├── unlisted_shares.parquet # Historical valuations & quotes (2019 - Present) for top 22 unlisted firms
     └── unlisted_shares.csv     # Plain CSV version for easy spreadsheet / Excel inspection
 scripts/
-├── fetch_all_stocks.py       # One-time full history bootstrap
-├── update_stocks.py          # Daily incremental updater
-├── fetch_all_indices.py      # One-time index history bootstrap
-├── update_indices.py         # Daily incremental indices updater
-├── update_commodities.py     # Daily commodities updater (Gold & Silver)
-├── update_mf.py              # Daily mutual funds NAV updater
-├── build_unlisted.py         # Full compiler for unlisted equity valuations (2019 - Present)
-├── update_unlisted.py        # Maintenance and updater for unlisted equity valuations
-├── verify_data.py            # Data quality checker
-├── download_symbol_lists.py  # Refresh stock symbol master lists
-└── utils.py                  # Shared helpers
+├── fetch_all_stocks.py             # One-time full history bootstrap
+├── update_stocks.py                # Daily incremental updater
+├── fetch_all_indices.py            # One-time index history bootstrap
+├── update_indices.py               # Daily incremental indices updater
+├── fetch_all_corporate_actions.py  # One-time full corporate actions bootstrap
+├── update_corporate_actions.py     # Daily incremental corporate actions updater
+├── update_commodities.py           # Daily commodities updater (Gold & Silver)
+├── update_mf.py                    # Daily mutual funds NAV updater
+├── build_unlisted.py               # Full compiler for unlisted equity valuations (2019 - Present)
+├── update_unlisted.py              # Maintenance and updater for unlisted equity valuations
+├── verify_data.py                  # Data quality checker
+├── download_symbol_lists.py        # Refresh stock symbol master lists
+└── utils.py                        # Shared helpers
 .github/workflows/
-├── daily_mf_update.yml          # 09:00 PM IST — Mutual Funds NAV from inception
-├── daily_commodities_update.yml # 09:05 PM IST — Gold & Silver bullion spot rates
-├── daily_unlisted_update.yml    # 09:10 PM IST — Top 22 unlisted / pre-IPO equities
-├── daily_indices_update.yml     # 09:15 PM IST — Benchmark & Sectoral indices
-└── daily_stocks_update.yml      # 09:30 PM IST — NSE & BSE stocks (with circuit breaker)
+├── daily_mf_update.yml                # 09:00 PM IST — Mutual Funds NAV from inception
+├── daily_commodities_update.yml       # 09:05 PM IST — Gold & Silver bullion spot rates
+├── daily_unlisted_update.yml          # 09:10 PM IST — Top 22 unlisted / pre-IPO equities
+├── daily_indices_update.yml           # 09:15 PM IST — Benchmark & Sectoral indices
+├── daily_corporate_actions_update.yml # 09:20 PM IST — Corporate Actions Master Update
+└── daily_stocks_update.yml            # 09:30 PM IST — NSE & BSE stocks (with circuit breaker)
 ```
 
 ---
@@ -176,6 +202,16 @@ print(df.tail())
 # BSE stock
 df = pd.read_parquet("data/BSE/HDFCBANK_BO.parquet")
 print(df.tail())
+
+# Corporate Actions Master Catalog (Bonus, Splits, Dividends, Rights, Demergers)
+ca = pd.read_parquet("data/CORPORATE_ACTIONS/corporate_actions.parquet")
+# Find all bonus issues in Indian market history:
+bonuses = ca[ca["Action_Type"] == "BONUS"]
+print(bonuses[["Ex_Date", "Symbol", "Company_Name", "Ratio_or_Amount"]].head())
+
+# Find all corporate actions for Reliance Industries:
+reliance_ca = ca[ca["Symbol"] == "RELIANCE"]
+print(reliance_ca[["Ex_Date", "Action_Type", "Ratio_or_Amount", "Purpose"]].head())
 
 # Benchmark & Sectoral Indices
 nifty = pd.read_parquet("data/INDICES/NIFTY_50.parquet")
@@ -249,7 +285,7 @@ print(f"Loaded {len(dfs)} stocks")
 
 ## 🔄 Update Schedule
 
-Data is automatically updated strictly on **Indian Market Working Days** (NSE & BSE trading days, excluding weekends and official stock exchange trading holidays) via **5 dedicated, isolated workflows**:
+Data is automatically updated strictly on **Indian Market Working Days** (NSE & BSE trading days, excluding weekends and official stock exchange trading holidays) via **6 dedicated, isolated workflows**:
 
 | Workflow | Asset Class | Execution Time | Average Duration | Isolation & Resilience |
 |----------|-------------|----------------|------------------|------------------------|
@@ -257,9 +293,10 @@ Data is automatically updated strictly on **Indian Market Working Days** (NSE & 
 | `daily_commodities_update.yml` | **Commodities (Gold & Silver)** | **9:05 PM IST** (15:35 UTC) | ~10 seconds | Bullion spot rates; 100% independent |
 | `daily_unlisted_update.yml` | **Unlisted & Pre-IPO Equities** | **9:10 PM IST** (15:40 UTC) | ~5 seconds | Indicative milestones; 100% independent |
 | `daily_indices_update.yml` | **Benchmark & Sectoral Indices** | **9:15 PM IST** (15:45 UTC) | ~5 seconds | Key indices & India VIX; 100% independent |
+| `daily_corporate_actions_update.yml` | **Corporate Actions Master** | **9:20 PM IST** (15:50 UTC) | ~5 seconds | Bonus, Splits, Dividends; 100% independent |
 | `daily_stocks_update.yml` | **Equities (NSE & BSE)** | **9:30 PM IST** (16:00 UTC) | ~30–50 minutes | Built-in circuit breaker & cooldown; 90m cap |
 
-> **Zero Blast Radius:** Because each asset class runs in its own dedicated workflow, a delay or rate limit in stock fetching has zero impact on Mutual Funds, Commodities, or Indices. NAVs, bullion prices, and indices are committed and available immediately every evening.
+> **Zero Blast Radius:** Because each asset class runs in its own dedicated workflow, a delay or rate limit in stock fetching has zero impact on Mutual Funds, Commodities, Indices, or Corporate Actions. Everything is committed and available immediately every evening.
 >
 > **Weekend Readiness:** Running on the same evening between 9:00 PM and 9:30 PM IST ensures that all Friday closing prices and weekend Muhurat sessions are committed and available immediately for researchers, portfolio backtesters, and weekend users throughout Saturday and Sunday.
 >

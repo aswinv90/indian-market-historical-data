@@ -12,7 +12,8 @@ This document outlines the architectural roadmap for **`indian-market-historical
 - [x] **Mutual Funds (Inception → Present):** Complete daily NAV history across all 37,896 AMFI schemes (~35.3M rows) sharded into 10 partitions + master metadata index.
 - [x] **Unlisted & Pre-IPO Shares (2019 → Present):** Valuation milestones and dealer quotes for top 22 companies in both `.parquet` and `.csv`.
 - [x] **Benchmark & Sectoral Indices (1997 → Present):** 10 major benchmark, sectoral, and volatility indices (NIFTY 50, S&P BSE SENSEX, NIFTY BANK, INDIA VIX, NIFTY IT, NIFTY PHARMA, NIFTY 100, NIFTY 200, NIFTY 500, NIFTY MIDCAP 50) in `data/INDICES/` with master catalog.
-- [x] **Decoupled Automation Architecture:** 5 isolated, staggered GitHub Actions workflows (MF → Commodities → Unlisted → Indices → Stocks) with built-in Yahoo Finance circuit breaker.
+- [x] **Corporate Actions Master Catalog (1990 → Present):** 43,700+ corporate actions covering Bonus issues, Stock Splits, Dividends, Rights, Buybacks, and Demergers in `data/CORPORATE_ACTIONS/` (both `.parquet` and `.csv`).
+- [x] **Decoupled Automation Architecture:** 6 isolated, staggered GitHub Actions workflows (MF → Commodities → Unlisted → Indices → Corporate Actions → Stocks) with built-in Yahoo Finance circuit breaker.
 
 ---
 
@@ -26,10 +27,11 @@ This document outlines the architectural roadmap for **`indian-market-historical
 
 ---
 
-### Phase 2: Corporate Actions Master Catalog 📜
-- **Unified Corporate Actions Table:**
-  - Ex-date, record date, company symbol, action type (Stock Split, Bonus Issue, Demerger, Rights Issue, Dividend amount).
-  - Consolidated cross-exchange historical reference file.
+### Phase 2: Corporate Actions Master Catalog 📜 *(Completed ✅)*
+- [x] **Unified Corporate Actions Table:** 43,748 events from 1990 to present + forward announcements (`data/CORPORATE_ACTIONS/`).
+- [x] **Action Types Tracked:** Bonus (with ratios), Splits (with split ratios), Dividends (with payout per share), Rights issues, Buybacks, Demergers, and AGM/EGM dates.
+- [x] **Dual Distribution:** Both snappy-compressed `.parquet` and plain `.csv` formats.
+- [x] **Dedicated Daily Workflow:** Staggered at 09:20 PM IST prior to stocks update.
 
 ---
 
