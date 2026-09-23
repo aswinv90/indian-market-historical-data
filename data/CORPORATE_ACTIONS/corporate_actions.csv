@@ -1,5 +1,6 @@
 Ex_Date,Record_Date,Symbol,Company_Name,Series,Action_Type,Ratio_or_Amount,Purpose,Face_Value,ISIN,BC_Start_Date,BC_End_Date
 2026-09-25,2026-09-25,LOTUSDEV,Sri Lotus Developers and Realty Limited,EQ,DIVIDEND,0.50,Dividend - Re 0.50 Per Share,1,INE0V9Q01010,,
+2026-09-24,2026-09-24,ARFIN,Arfin India Limited,EQ,DIVIDEND,0.12,Interim Dividend - Re 0.12 Per Share,1,INE784R01023,,
 2026-09-24,2026-09-24,ENGINERSIN,Engineers India Limited,EQ,DIVIDEND,2.50,Dividend - Rs 2.50 Per Share,5,INE510A01010,,
 2026-09-23,2026-09-23,AAATECH,Aaa Technologies Limited,EQ,DIVIDEND,1.00,Dividend - Re 1 Per Share,10,INE0D0U01013,,
 2026-09-23,2026-09-23,AGIIL,Agi Infra Limited,EQ,DIVIDEND,0.20,Dividend - Re 0.20 Per Share,1,INE976R01017,,
