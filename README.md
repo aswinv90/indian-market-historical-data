@@ -1,6 +1,6 @@
-# 📈 Indian Historical Stock Prices, Indices, Corporate Actions, Commodities, Mutual Funds & Unlisted Shares
+# 📈 Indian Historical Stock Prices, Indices, Corporate Actions, Institutional Flows, Commodities, Mutual Funds & Unlisted Shares
 
-A free, open dataset of **complete daily historical stock price data** (NSE & BSE), **major benchmark and sectoral indices** (NIFTY 50, SENSEX, etc.), **comprehensive corporate actions master catalog** (Bonus, Splits, Dividends, Rights, Demergers 1990 → Present), **50+ years of historical Gold & Silver bullion rates**, **complete daily NAV history of all Indian Mutual Funds from inception**, and **historical valuations of major Indian Unlisted / Pre-IPO shares (2019 → Present)** — updated automatically every market working day.
+A free, open dataset of **complete daily historical stock price data** (NSE & BSE), **major benchmark and sectoral indices** (NIFTY 50, SENSEX, etc.), **comprehensive corporate actions master catalog** (Bonus, Splits, Dividends, Rights, Demergers 1990 → Present), **institutional capital flows & derivatives positioning** (FII/DII daily cash flows & FII Long Ratio %), **50+ years of historical Gold & Silver bullion rates**, **complete daily NAV history of all Indian Mutual Funds from inception**, and **historical valuations of major Indian Unlisted / Pre-IPO shares (2019 → Present)** — updated automatically every market working day.
 
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support%20Project-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/aswinv)
 
@@ -33,6 +33,13 @@ A free, open dataset of **complete daily historical stock price data** (NSE & BS
 |----------|----------------|--------|------------|-----------------------|
 | **All Listed Equities** | **Bonus Issues, Stock Splits, Dividends, Rights, Buybacks, Demergers** | `data/CORPORATE_ACTIONS/corporate_actions.parquet`<br>`data/CORPORATE_ACTIONS/corporate_actions.csv` | 1990 → Present & Upcoming Announced | **43,748 events** |
 
+### Institutional Capital Flows (FII / DII)
+| Segment | Tracked Metrics & Sentiment | Format | Date Range | Total Records |
+|---------|-----------------------------|--------|------------|---------------|
+| **Cash Market Flows** | Gross Buy, Sell, and Net Investment in ₹ Crores for FII & DII | `data/FLOWS/fii_dii_cash.parquet`<br>`data/FLOWS/fii_dii_cash.csv` | Daily (2026 → Present) | **159 daily records** |
+| **Derivatives Positioning & Sentiment** | Participant Open Interest (Client, DII, FII, Pro) & **FII Long Ratio %** | `data/FLOWS/fii_derivatives.parquet`<br>`data/FLOWS/fii_derivatives.csv` | Daily (2024 → Present) | **673 daily records** |
+| **NSDL Monthly Macro Flows** | Foreign Portfolio Investors (FPI) Net Equity vs Debt Inflows in ₹ Crores | `data/FLOWS/fpi_monthly_history.parquet`<br>`data/FLOWS/fpi_monthly_history.csv` | 2005 → Present (21+ yrs) | **255 monthly records** |
+
 ### Commodities (Bullion)
 | Commodity | Coverage & Purities | Format | Date Range |
 |-----------|---------------------|--------|------------|
@@ -52,6 +59,7 @@ A free, open dataset of **complete daily historical stock price data** (NSE & BS
 - **Total stock files:** ~6,976
 - **Total index files:** 10 + 1 master catalog
 - **Total corporate actions catalog:** 43,748 events (Parquet + CSV)
+- **Total institutional flows datasets:** 3 unified datasets (Cash, Derivatives OI, NSDL Monthly)
 - **Total commodities files:** 2
 - **Total mutual fund partitions:** 10 + 1 master index
 - **Total unlisted shares datasets:** 1 unified master file
@@ -97,6 +105,24 @@ Each stock Parquet file contains daily records with the following columns:
 * `Face_Value`: Face value per share (₹)
 * `ISIN`: International Securities Identification Number
 * `BC_Start_Date`, `BC_End_Date`: Book closure dates
+
+### Institutional Capital Flows (`data/FLOWS/`)
+* **Cash Market Net Flows (`data/FLOWS/fii_dii_cash.parquet` & `.csv`):**
+  * `Date`: Trading date (`YYYY-MM-DD`)
+  * `FII_Buy_Cr`, `FII_Sell_Cr`, `FII_Net_Cr`: FII gross buy, sell, and net investment in ₹ Crores
+  * `DII_Buy_Cr`, `DII_Sell_Cr`, `DII_Net_Cr`: DII gross buy, sell, and net investment in ₹ Crores
+  * `Total_Net_Cr`: Combined institutional net cash flow (`FII_Net_Cr + DII_Net_Cr`)
+* **Derivatives Open Interest & Sentiment (`data/FLOWS/fii_derivatives.parquet` & `.csv`):**
+  * `Date`: Trading date (`YYYY-MM-DD`)
+  * `FII_Index_Futures_Long`, `FII_Index_Futures_Short`, `FII_Index_Futures_Net`: FII contracts in Index Futures
+  * `FII_Long_Ratio_Pct`: **FII Long Ratio %** (`Long / (Long + Short) * 100`) — Primary quant directional sentiment indicator
+  * `DII_Index_Futures_Long`, `DII_Index_Futures_Short`, `DII_Index_Futures_Net`: DII positioning
+  * `Pro_Index_Futures_Net`, `Client_Index_Futures_Net`: Proprietary desk and Retail client net positions
+  * `FII_Stock_Futures_Net`, `DII_Stock_Futures_Net`: Stock futures net contracts
+  * `FII_Index_Call_Long`, `FII_Index_Call_Short`, `FII_Index_Put_Long`, `FII_Index_Put_Short`: FII index options positioning
+  * `Total_Index_Futures_OI`: Total index futures open interest contracts
+* **NSDL Macro History (`data/FLOWS/fpi_monthly_history.parquet` & `.csv`):**
+  * `Year`, `Month`, `Equity_Net_Cr`, `Debt_Net_Cr`, `Total_Net_Cr`, `Source` (NSDL)
 
 ### Commodities (Gold & Silver)
 * **Gold (`data/COMMODITIES/GOLD_INR.parquet`):**
@@ -149,6 +175,13 @@ data/
 ├── CORPORATE_ACTIONS/
 │   ├── corporate_actions.parquet # 43,700+ corporate actions (1990 - present & upcoming)
 │   └── corporate_actions.csv     # Complete tabular catalog for spreadsheet inspection
+├── FLOWS/
+│   ├── fii_dii_cash.parquet      # Daily Cash Market net flows (₹ Crores) for FII & DII
+│   ├── fii_dii_cash.csv          # Tabular CSV for spreadsheet analysis
+│   ├── fii_derivatives.parquet   # Daily participant Open Interest (NSE NSCCL) + FII Long Ratio %
+│   ├── fii_derivatives.csv       # Tabular derivatives positioning CSV
+│   ├── fpi_monthly_history.parquet # 21+ Years (2005 - 2026) NSDL monthly equity/debt flows
+│   └── fpi_monthly_history.csv   # Tabular monthly macro flow history
 ├── COMMODITIES/
 │   ├── GOLD_INR.parquet      # 50+ yrs (1970 - present) 24K, 22K, 18K in ₹/10g & ₹/1g
 │   └── SILVER_INR.parquet    # 50+ yrs (1970 - present) 999 & 925 in ₹/kg, 10g & 1g
@@ -166,6 +199,8 @@ scripts/
 ├── update_indices.py               # Daily incremental indices updater
 ├── fetch_all_corporate_actions.py  # One-time full corporate actions bootstrap
 ├── update_corporate_actions.py     # Daily incremental corporate actions updater
+├── fetch_all_flows.py              # One-time full institutional flows bootstrap
+├── update_flows.py                 # Daily incremental institutional flows updater
 ├── update_commodities.py           # Daily commodities updater (Gold & Silver)
 ├── update_mf.py                    # Daily mutual funds NAV updater
 ├── build_unlisted.py               # Full compiler for unlisted equity valuations (2019 - Present)
@@ -179,7 +214,8 @@ scripts/
 ├── daily_unlisted_update.yml          # 06:58 PM IST — Top 22 unlisted / pre-IPO equities
 ├── daily_indices_update.yml           # 07:04 PM IST — Benchmark & Sectoral indices
 ├── daily_corporate_actions_update.yml # 07:11 PM IST — Corporate Actions Master Update
-└── daily_stocks_update.yml            # 07:20 PM IST — NSE & BSE stocks (with circuit breaker)
+├── daily_flows_update.yml             # 07:16 PM IST — Institutional Capital Flows (FII / DII)
+└── daily_stocks_update.yml            # 07:25 PM IST — NSE & BSE stocks (with circuit breaker)
 ```
 
 ---
@@ -219,6 +255,17 @@ print(nifty.tail())
 
 vix = pd.read_parquet("data/INDICES/INDIA_VIX.parquet")
 print(vix.tail())
+
+# Institutional Capital Flows (Cash & Derivatives Sentiment)
+flows_cash = pd.read_parquet("data/FLOWS/fii_dii_cash.parquet")
+print(flows_cash[["Date", "FII_Net_Cr", "DII_Net_Cr", "Total_Net_Cr"]].tail())
+
+# Track FII Index Futures Long Ratio % (Primary quant bullish/bearish bias)
+derivatives = pd.read_parquet("data/FLOWS/fii_derivatives.parquet")
+latest_fao = derivatives.iloc[-1]
+print(f"Date: {latest_fao['Date']}")
+print(f"FII Index Futures Long: {latest_fao['FII_Index_Futures_Long']:,} | Short: {latest_fao['FII_Index_Futures_Short']:,}")
+print(f"FII Long Ratio: {latest_fao['FII_Long_Ratio_Pct']}%")
 
 # Commodities (Gold & Silver - 50+ Years)
 gold = pd.read_parquet("data/COMMODITIES/GOLD_INR.parquet")
@@ -285,7 +332,7 @@ print(f"Loaded {len(dfs)} stocks")
 
 ## 🔄 Update Schedule
 
-Data is automatically updated strictly on **Indian Market Working Days** (NSE & BSE trading days, excluding weekends and official stock exchange trading holidays) via **6 dedicated, isolated workflows**:
+Data is automatically updated strictly on **Indian Market Working Days** (NSE & BSE trading days, excluding weekends and official stock exchange trading holidays) via **7 dedicated, isolated workflows**:
 
 | Workflow | Asset Class | Execution Time | Average Duration | Isolation & Resilience |
 |----------|-------------|----------------|------------------|------------------------|
@@ -294,11 +341,12 @@ Data is automatically updated strictly on **Indian Market Working Days** (NSE & 
 | `daily_unlisted_update.yml` | **Unlisted & Pre-IPO Equities** | **6:58 PM IST** (13:28 UTC) | ~5 seconds | Indicative milestones; 100% independent |
 | `daily_indices_update.yml` | **Benchmark & Sectoral Indices** | **7:04 PM IST** (13:34 UTC) | ~5 seconds | Key indices & India VIX; 100% independent |
 | `daily_corporate_actions_update.yml` | **Corporate Actions Master** | **7:11 PM IST** (13:41 UTC) | ~5 seconds | Bonus, Splits, Dividends; 100% independent |
-| `daily_stocks_update.yml` | **Equities (NSE & BSE)** | **7:20 PM IST** (13:50 UTC) | ~30–50 minutes | Built-in circuit breaker & cooldown; 90m cap |
+| `daily_flows_update.yml` | **Institutional Capital Flows** | **7:16 PM IST** (13:46 UTC) | ~10 seconds | FII/DII cash & F&O sentiment; 100% independent |
+| `daily_stocks_update.yml` | **Equities (NSE & BSE)** | **7:25 PM IST** (13:55 UTC) | ~30–50 minutes | Built-in circuit breaker & cooldown; 90m cap |
 
-> **Zero Blast Radius:** Because each asset class runs in its own dedicated workflow, a delay or rate limit in stock fetching has zero impact on Mutual Funds, Commodities, Indices, or Corporate Actions. Everything is committed and available immediately every evening.
+> **Zero Blast Radius:** Because each asset class runs in its own dedicated workflow, a delay or rate limit in stock fetching has zero impact on Mutual Funds, Commodities, Indices, Corporate Actions, or Institutional Flows. Everything is committed and available immediately every evening.
 >
-> **Evening Readiness:** Running between 6:45 PM and 7:20 PM IST ensures that all market closes and settlements are committed early in the evening, well before nightfall.
+> **Evening Readiness:** Running between 6:45 PM and 7:25 PM IST ensures that all market closes, settlements, and institutional reports are committed early in the evening, well before nightfall.
 >
 > **Trading Holiday Gate:** The automated pipeline evaluates exchange holiday calendars. If a day is a declared market holiday (e.g. Republic Day, Holi, etc.), the run safely exits without producing empty commits.
 >

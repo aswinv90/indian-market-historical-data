@@ -1,9 +1,9 @@
-name: Daily Stock Price Update (NSE & BSE)
+name: Daily Institutional Flows Update
 
 on:
   schedule:
-    # Runs every day at 13:55 UTC = 07:25 PM IST
-    - cron: '55 13 * * *'
+    # Runs every day at 13:46 UTC = 07:16 PM IST (after Corporate Actions, before Stocks)
+    - cron: '46 13 * * *'
 
   workflow_dispatch:
 
@@ -11,9 +11,9 @@ permissions:
   contents: write
 
 jobs:
-  update-stocks:
+  update-flows:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 15
 
     steps:
       - name: Checkout repository
@@ -40,24 +40,20 @@ jobs:
             python scripts/check_market_day.py
           fi
 
-      - name: Run daily stock update (with Circuit Breaker)
+      - name: Run daily institutional flows update
         if: steps.market_check.outputs.is_open == 'true'
-        run: python scripts/update_stocks.py
+        run: python scripts/update_flows.py
 
-      - name: Verify data coverage
-        if: steps.market_check.outputs.is_open == 'true'
-        run: python scripts/verify_data.py --stale-days 2 || true
-
-      - name: Commit and push updated stock data
+      - name: Commit and push updated flows data
         if: steps.market_check.outputs.is_open == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/NSE/ data/BSE/ stock_list_nse.csv stock_list_bse.csv
+          git add data/FLOWS/
           if ! git diff --cached --quiet; then
-            git commit -m "chore(stocks): daily stock price update $(date -u +'%Y-%m-%d')"
+            git commit -m "chore(flows): daily institutional capital flows update $(date -u +'%Y-%m-%d')"
             git pull --rebase origin main
             git push origin main
           else
-            echo "No changes to commit for Stocks."
+            echo "No changes to commit for Institutional Flows."
           fi

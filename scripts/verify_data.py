@@ -84,6 +84,32 @@ def load_failed_log() -> list[str]:
     return [l.split("\t")[0] for l in lines if l.strip()]
 
 
+def check_flows_dataset():
+    """Verify Institutional Capital Flows datasets in data/FLOWS/."""
+    flows_dir = Path(__file__).resolve().parent.parent / "data" / "FLOWS"
+    if not flows_dir.exists():
+        return
+    print(f"\n{'─'*60}")
+    print("  INSTITUTIONAL CAPITAL FLOWS (FII / DII)")
+    print(f"{'─'*60}")
+    targets = [
+        ("fii_dii_cash.parquet", "Daily Cash Flows (₹ Cr)"),
+        ("fii_derivatives.parquet", "Daily Derivatives OI & Long Ratio"),
+        ("fpi_monthly_history.parquet", "NSDL Monthly Macro (2005-2026)")
+    ]
+    for fname, label in targets:
+        p = flows_dir / fname
+        if p.exists():
+            df = pd.read_parquet(p)
+            date_col = "Date" if "Date" in df.columns else "Year"
+            min_val = df[date_col].min()
+            max_val = df[date_col].max()
+            print(f"  ✅ {label:<32}: {len(df):>5,} rows | {min_val} -> {max_val} | {p.stat().st_size/1024:.1f} KB")
+        else:
+            print(f"  ❌ {label:<32}: MISSING ({fname})")
+    print()
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
@@ -106,6 +132,8 @@ def main():
     print(f"  STOCK DATA VERIFICATION REPORT")
     print(f"  Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"{'='*60}\n")
+
+    check_flows_dataset()
 
     # ── Scan all files ─────────────────────────────────────────────────────────
     results = []
