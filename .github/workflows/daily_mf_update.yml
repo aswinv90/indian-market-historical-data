@@ -2,8 +2,8 @@ name: Daily Mutual Funds NAV Update
 
 on:
   schedule:
-    # Runs every day at 15:30 UTC = 09:00 PM IST (AMFI publishes NAVs ~8:30-9:00 PM IST)
-    - cron: '30 15 * * *'
+    # Runs every day at 13:17 UTC = 06:47 PM IST
+    - cron: '17 13 * * *'
 
   workflow_dispatch:
 

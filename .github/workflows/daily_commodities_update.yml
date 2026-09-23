@@ -2,8 +2,8 @@ name: Daily Commodities Update (Gold & Silver)
 
 on:
   schedule:
-    # Runs every day at 15:35 UTC = 09:05 PM IST
-    - cron: '35 15 * * *'
+    # Runs every day at 13:23 UTC = 06:53 PM IST
+    - cron: '23 13 * * *'
 
   workflow_dispatch:
 

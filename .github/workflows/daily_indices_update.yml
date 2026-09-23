@@ -2,8 +2,8 @@ name: Daily Broad Market & Sectoral Indices Update
 
 on:
   schedule:
-    # Runs every day at 15:45 UTC = 09:15 PM IST (prior to stocks update)
-    - cron: '45 15 * * *'
+    # Runs every day at 13:34 UTC = 07:04 PM IST (prior to stocks update)
+    - cron: '34 13 * * *'
 
   workflow_dispatch:
 

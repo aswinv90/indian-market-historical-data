@@ -2,8 +2,8 @@ name: Daily Unlisted Shares Check & Update
 
 on:
   schedule:
-    # Runs every day at 15:40 UTC = 09:10 PM IST
-    - cron: '40 15 * * *'
+    # Runs every day at 13:28 UTC = 06:58 PM IST
+    - cron: '28 13 * * *'
 
   workflow_dispatch:
 
