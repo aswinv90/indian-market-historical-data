@@ -2,3 +2,6 @@ pandas>=2.0.0
 pyarrow>=14.0.0
 requests>=2.31.0
 tqdm>=4.66.0
+yfinance>=0.2.36
+curl_cffi>=0.7.0
+beautifulsoup4>=4.12.0

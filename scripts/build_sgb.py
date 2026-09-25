@@ -430,7 +430,7 @@ def build_market_prices(df_catalog):
 
 def main():
     print("=" * 60)
-    print("PHASE 5: SOVEREIGN GOLD BONDS (SGB) MASTER CATALOG (2015-2024)")
+    print("SOVEREIGN GOLD BONDS (SGB) MASTER CATALOG (2015-2024)")
     print("=" * 60)
     df_catalog = build_catalog()
     print("-" * 60)
@@ -438,7 +438,7 @@ def main():
     print("-" * 60)
     build_market_prices(df_catalog)
     print("=" * 60)
-    print("Phase 5 compilation complete!")
+    print("SGB compilation complete!")
 
 
 if __name__ == "__main__":

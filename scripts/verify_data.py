@@ -138,6 +138,34 @@ def check_sgb_dataset():
     print()
 
 
+def check_macro_dataset():
+    """Verify Macroeconomic and Fixed Income datasets in data/MACRO/."""
+    macro_dir = Path(__file__).resolve().parent.parent / "data" / "MACRO"
+    if not macro_dir.exists():
+        return
+    print(f"\n{'─'*60}")
+    print("  MACROECONOMIC & FIXED INCOME INDICATORS")
+    print(f"{'─'*60}")
+    targets = [
+        ("in10y_bond_yield.parquet", "India 10Y Benchmark Yield (IN10Y)"),
+        ("forex_rates.parquet", "Forex Rates (USD, EUR, GBP, JPY)"),
+        ("rbi_policy_rates.parquet", "RBI Policy Rates & Reserve History"),
+        ("cpi_inflation.parquet", "CPI Inflation History (MoSPI)"),
+    ]
+    for fname, label in targets:
+        p = macro_dir / fname
+        if p.exists():
+            df = pd.read_parquet(p)
+            size_kb = p.stat().st_size / 1024
+            date_col = "Date" if "Date" in df.columns else ("Effective_Date" if "Effective_Date" in df.columns else df.columns[0])
+            min_val = df[date_col].min()
+            max_val = df[date_col].max()
+            print(f"  ✅ {label:<35}: {len(df):>5,} rows | {min_val} -> {max_val} | {size_kb:.1f} KB")
+        else:
+            print(f"  ❌ {label:<35}: MISSING ({fname})")
+    print()
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
@@ -163,6 +191,7 @@ def main():
 
     check_flows_dataset()
     check_sgb_dataset()
+    check_macro_dataset()
 
     # ── Scan all files ─────────────────────────────────────────────────────────
     results = []

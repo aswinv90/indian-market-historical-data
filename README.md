@@ -1,6 +1,6 @@
-# 📈 Indian Historical Stock Prices, Indices, Corporate Actions, Institutional Flows, Sovereign Gold Bonds, Commodities, Mutual Funds & Unlisted Shares
+# 📈 Indian Historical Stock Prices, Indices, Corporate Actions, Institutional Flows, Sovereign Gold Bonds, Macroeconomic Indicators, Commodities, Mutual Funds & Unlisted Shares
 
-A free, open dataset of **complete daily historical stock price data** (NSE & BSE), **major benchmark and sectoral indices** (NIFTY 50, SENSEX, etc.), **comprehensive corporate actions master catalog** (Bonus, Splits, Dividends, Rights, Demergers 1990 → Present), **institutional capital flows & derivatives positioning** (FII/DII daily cash flows & FII Long Ratio %), **complete master catalog of Sovereign Gold Bonds (SGB 2015 → 2024)** with all 67 tranches, cash flow schedules, and secondary market prices, **50+ years of historical Gold & Silver bullion rates**, **complete daily NAV history of all Indian Mutual Funds from inception**, and **historical valuations of major Indian Unlisted / Pre-IPO shares (2019 → Present)** — updated automatically every market working day.
+A free, open dataset of **complete daily historical stock price data** (NSE & BSE), **major benchmark and sectoral indices** (NIFTY 50, SENSEX, etc.), **comprehensive corporate actions master catalog** (Bonus, Splits, Dividends, Rights, Demergers 1990 → Present), **institutional capital flows & derivatives positioning** (FII/DII daily cash flows & FII Long Ratio %), **complete master catalog of Sovereign Gold Bonds (SGB 2015 → 2024)** with all 67 tranches, cash flow schedules, and secondary market prices, **macroeconomic & fixed income indicators** (India 10-Year Benchmark G-Sec Yield, Foreign Exchange Rates, RBI Policy Rates & CPI Inflation), **50+ years of historical Gold & Silver bullion rates**, **complete daily NAV history of all Indian Mutual Funds from inception**, and **historical valuations of major Indian Unlisted / Pre-IPO shares (2019 → Present)** — updated automatically every market working day.
 
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support%20Project-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/aswinv)
 
@@ -47,6 +47,14 @@ A free, open dataset of **complete daily historical stock price data** (NSE & BS
 | **Cash Flows Schedule** | Complete semi-annual coupon schedule (2.75% / 2.50%) & principal redemption payouts for every bond | `data/SGB/sgb_cash_flows.parquet`<br>`data/SGB/sgb_cash_flows.csv` | 2016 → 2032 | **1,139 cash flow events** |
 | **Secondary Market Quotes** | Live trading quotes on NSE & BSE, LTP, Spot Gold comparison, and Discount/Premium % | `data/SGB/sgb_market_prices.parquet`<br>`data/SGB/sgb_market_prices.csv` | Active Tranches | **45 active bonds** |
 
+### Macroeconomic & Fixed Income Indicators
+| Indicator | Description & Metrics | Format | Date Range | Total Records |
+|-----------|------------------------|--------|------------|---------------|
+| **India 10Y Benchmark Bond Yield (IN10Y)** | Sovereign 10-Year Government Bond daily yield (Open, High, Low, Close, Change %) | `data/MACRO/in10y_bond_yield.parquet`<br>`data/MACRO/in10y_bond_yield.csv` | 2000 → Present (26+ yrs) | **6,901 daily records** |
+| **Foreign Exchange Rates (Forex)** | Daily exchange rates against INR for **USD/INR, EUR/INR, GBP/INR, JPY/INR** | `data/MACRO/forex_rates.parquet`<br>`data/MACRO/forex_rates.csv` | 2006 → Present (20+ yrs) | **5,283 daily records** |
+| **RBI Monetary Policy Rates History** | Timeline of Repo Rate, Reverse Repo Rate, SDF, MSF, Bank Rate, CRR, and SLR decisions | `data/MACRO/rbi_policy_rates.parquet`<br>`data/MACRO/rbi_policy_rates.csv` | 2000 → Present | **91 policy events** |
+| **Consumer Price Index (CPI Inflation)** | Monthly headline retail CPI index (Base 2012=100) and computed YoY Inflation Rate % | `data/MACRO/cpi_inflation.parquet`<br>`data/MACRO/cpi_inflation.csv` | 1957 → Present (68+ yrs) | **819 monthly records** |
+
 ### Commodities (Bullion)
 | Commodity | Coverage & Purities | Format | Date Range |
 |-----------|---------------------|--------|------------|
@@ -68,10 +76,11 @@ A free, open dataset of **complete daily historical stock price data** (NSE & BS
 - **Total corporate actions catalog:** 43,748 events (Parquet + CSV)
 - **Total institutional flows datasets:** 3 unified datasets (Cash, Derivatives OI, NSDL Monthly)
 - **Total sovereign gold bonds datasets:** 3 unified datasets (Master Catalog, Cash Flows, Market Prices)
+- **Total macroeconomic datasets:** 4 unified datasets (10Y Yield, Forex, RBI Rates, CPI Inflation)
 - **Total commodities files:** 2
 - **Total mutual fund partitions:** 10 + 1 master index
 - **Total unlisted shares datasets:** 1 unified master file
-- **Total dataset size:** ~1.04 GB
+- **Total dataset size:** ~1.05 GB
 
 ---
 
@@ -155,6 +164,29 @@ Each stock Parquet file contains daily records with the following columns:
 * **Secondary Market Quotes (`data/SGB/sgb_market_prices.parquet` & `.csv`):**
   * `Symbol`, `Tranche`, `ISIN`, `Exchange` (`NSE`/`BSE`), `LTP`, `Spot_Gold_Rate`, `Premium_Discount_Pct`, `Issue_Price`, `Maturity_Date`, `Status`
 
+### Macroeconomic & Fixed Income Indicators (`data/MACRO/`)
+* **India 10-Year Benchmark Bond Yield (`data/MACRO/in10y_bond_yield.parquet` & `.csv`):**
+  * `Date`: Trading date (`YYYY-MM-DD`)
+  * `Open`, `High`, `Low`, `Close`: Sovereign 10Y benchmark yield (%)
+  * `Change_Pct`: Daily percentage yield shift
+* **Foreign Exchange Rates (`data/MACRO/forex_rates.parquet` & `.csv`):**
+  * `Date`: Trading date (`YYYY-MM-DD`)
+  * `USD_INR`, `EUR_INR`, `GBP_INR`, `JPY_INR`: Daily closing currency exchange rates
+* **RBI Monetary Policy Rates (`data/MACRO/rbi_policy_rates.parquet` & `.csv`):**
+  * `Date`: Policy effective date
+  * `Repo`: Policy Repo Rate (%)
+  * `Reverse_Repo`: Reverse Repo Rate (%)
+  * `SDF`: Standing Deposit Facility Rate (%)
+  * `MSF`: Marginal Standing Facility Rate (%)
+  * `Bank_Rate`: Bank Rate (%)
+  * `CRR`: Cash Reserve Ratio (%)
+  * `SLR`: Statutory Liquidity Ratio (%)
+  * `Event`: Monetary Policy Committee (MPC) resolution or operational decision description
+* **CPI Inflation History (`data/MACRO/cpi_inflation.parquet` & `.csv`):**
+  * `Date`: First day of reporting month (`YYYY-MM-01`)
+  * `CPI_Index`: Headline Consumer Price Index of All Items (Base 2012=100)
+  * `Inflation_YoY_Pct`: Calculated Year-over-Year (YoY) retail inflation rate (%)
+
 ### Commodities (Gold & Silver)
 * **Gold (`data/COMMODITIES/GOLD_INR.parquet`):**
   * `Gold_24K_10g`, `Gold_24K_1g` (Pure 24 Karat 99.9%)
@@ -220,6 +252,15 @@ data/
 │   ├── sgb_cash_flows.csv         # Tabular cash flows schedule
 │   ├── sgb_market_prices.parquet  # Live trading quotes, LTP, Spot Gold comparison, Discount/Premium %
 │   └── sgb_market_prices.csv      # Tabular secondary market quotes
+├── MACRO/
+│   ├── in10y_bond_yield.parquet   # Daily India 10-Year Benchmark G-Sec Yield (2000 - Present, 6,900+ rows)
+│   ├── in10y_bond_yield.csv       # Tabular 10Y yield CSV
+│   ├── forex_rates.parquet        # Daily multi-decade Forex rates (USD, EUR, GBP, JPY vs INR)
+│   ├── forex_rates.csv            # Tabular Forex rates CSV
+│   ├── rbi_policy_rates.parquet   # Timeline of RBI Repo, Reverse Repo, MSF, Bank Rate, CRR, SLR (2000 - Present)
+│   ├── rbi_policy_rates.csv       # Tabular RBI policy rates CSV
+│   ├── cpi_inflation.parquet      # Monthly Consumer Price Index & YoY Inflation % (1957 - Present, 800+ rows)
+│   └── cpi_inflation.csv          # Tabular CPI inflation CSV
 ├── COMMODITIES/
 │   ├── GOLD_INR.parquet      # 50+ yrs (1970 - present) 24K, 22K, 18K in ₹/10g & ₹/1g
 │   └── SILVER_INR.parquet    # 50+ yrs (1970 - present) 999 & 925 in ₹/kg, 10g & 1g
@@ -241,6 +282,8 @@ scripts/
 ├── update_flows.py                 # Daily incremental institutional flows updater
 ├── build_sgb.py                    # Complete builder for all 67 Sovereign Gold Bond tranches
 ├── update_sgb.py                   # Daily updater and market price tracker for SGBs
+├── build_macro.py                  # Full compiler for macroeconomic and fixed income indicators
+├── update_macro.py                 # Daily incremental updater for macro indicators (Yield & Forex)
 ├── update_commodities.py           # Daily commodities updater (Gold & Silver)
 ├── update_mf.py                    # Daily mutual funds NAV updater
 ├── build_unlisted.py               # Full compiler for unlisted equity valuations (2019 - Present)
@@ -249,6 +292,7 @@ scripts/
 ├── download_symbol_lists.py        # Refresh stock symbol master lists
 └── utils.py                        # Shared helpers
 .github/workflows/
+├── daily_macro_update.yml          # 06:35 PM IST — Macro indicators (India 10Y Yield, Forex, Policy Rates)
 ├── daily_sgb_update.yml            # 06:40 PM IST — Sovereign Gold Bonds (SGB) master & secondary quotes
 ├── daily_mf_update.yml                # 06:47 PM IST — Mutual Funds NAV from inception
 ├── daily_commodities_update.yml       # 06:53 PM IST — Gold & Silver bullion spot rates
@@ -321,6 +365,23 @@ sgb_mkt = pd.read_parquet("data/SGB/sgb_market_prices.parquet")
 discounted = sgb_mkt[sgb_mkt["Premium_Discount_Pct"] < 0]
 print(discounted[["Symbol", "Tranche", "LTP", "Spot_Gold_Rate", "Premium_Discount_Pct"]].head())
 
+# Macroeconomic & Fixed Income Indicators (10Y Yield, Forex, RBI Policy Rates, CPI Inflation)
+# India 10-Year Benchmark G-Sec Yield (2000 - Present):
+yield_10y = pd.read_parquet("data/MACRO/in10y_bond_yield.parquet")
+print(yield_10y.tail())
+
+# Daily Multi-Decade Forex Rates (USD, EUR, GBP, JPY vs INR):
+fx = pd.read_parquet("data/MACRO/forex_rates.parquet")
+print(fx[["Date", "USD_INR", "EUR_INR", "GBP_INR", "JPY_INR"]].tail())
+
+# RBI Monetary Policy Committee (MPC) Decisions:
+rbi = pd.read_parquet("data/MACRO/rbi_policy_rates.parquet")
+print(rbi[["Date", "Repo", "Reverse_Repo", "SDF", "MSF", "CRR", "SLR", "Event"]].tail())
+
+# Long-term CPI Inflation & YoY % (1957 - Present):
+cpi = pd.read_parquet("data/MACRO/cpi_inflation.parquet")
+print(cpi.tail())
+
 # Commodities (Gold & Silver - 50+ Years)
 gold = pd.read_parquet("data/COMMODITIES/GOLD_INR.parquet")
 print(gold[["Gold_24K_10g", "Gold_22K_10g", "Gold_18K_10g"]].tail())
@@ -386,10 +447,11 @@ print(f"Loaded {len(dfs)} stocks")
 
 ## 🔄 Update Schedule
 
-Data is automatically updated strictly on **Indian Market Working Days** (NSE & BSE trading days, excluding weekends and official stock exchange trading holidays) via **8 dedicated, isolated workflows**:
+Data is automatically updated strictly on **Indian Market Working Days** (NSE & BSE trading days, excluding weekends and official stock exchange trading holidays) via **9 dedicated, isolated workflows**:
 
 | Workflow | Asset Class | Execution Time | Average Duration | Isolation & Resilience |
 |----------|-------------|----------------|------------------|------------------------|
+| `daily_macro_update.yml` | **Macro Indicators (10Y Yield & Forex)** | **6:35 PM IST** (13:05 UTC) | ~10 seconds | Sovereign 10Y G-Sec yield & FX rates; 100% independent |
 | `daily_sgb_update.yml` | **Sovereign Gold Bonds (SGB)** | **6:40 PM IST** (13:10 UTC) | ~10 seconds | Catalog status & secondary quotes; 100% independent |
 | `daily_mf_update.yml` | **Mutual Funds (Daily NAV)** | **6:47 PM IST** (13:17 UTC) | ~35 seconds | AMFI direct fetch; 100% independent |
 | `daily_commodities_update.yml` | **Commodities (Gold & Silver)** | **6:53 PM IST** (13:23 UTC) | ~10 seconds | Bullion spot rates; 100% independent |
@@ -399,9 +461,9 @@ Data is automatically updated strictly on **Indian Market Working Days** (NSE & 
 | `daily_flows_update.yml` | **Institutional Capital Flows** | **7:16 PM IST** (13:46 UTC) | ~10 seconds | FII/DII cash & F&O sentiment; 100% independent |
 | `daily_stocks_update.yml` | **Equities (NSE & BSE)** | **7:25 PM IST** (13:55 UTC) | ~30–50 minutes | Built-in circuit breaker & cooldown; 90m cap |
 
-> **Zero Blast Radius:** Because each asset class runs in its own dedicated workflow, a delay or rate limit in stock fetching has zero impact on Mutual Funds, Commodities, Indices, Corporate Actions, Institutional Flows, or Sovereign Gold Bonds. Everything is committed and available immediately every evening.
+> **Zero Blast Radius:** Because each asset class runs in its own dedicated workflow, a delay or rate limit in stock fetching has zero impact on Mutual Funds, Commodities, Indices, Corporate Actions, Institutional Flows, Sovereign Gold Bonds, or Macroeconomic indicators. Everything is committed and available immediately every evening.
 >
-> **Evening Readiness:** Running between 6:40 PM and 7:25 PM IST ensures that all market closes, settlements, and institutional reports are committed early in the evening, well before nightfall.
+> **Evening Readiness:** Running between 6:35 PM and 7:25 PM IST ensures that all market closes, settlements, and institutional reports are committed early in the evening, well before nightfall.
 >
 > **Trading Holiday Gate:** The automated pipeline evaluates exchange holiday calendars. If a day is a declared market holiday (e.g. Republic Day, Holi, etc.), the run safely exits without producing empty commits.
 >
