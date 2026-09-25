@@ -1,11 +1,11 @@
 Symbol,Ticker,Name,Exchange,Category,Description,Start_Date,End_Date,Total_Records,Parquet_File
-NIFTY_50,^NSEI,NIFTY 50,NSE,Benchmark,Benchmark 50 large-cap Indian stocks,2007-09-17,2026-09-24,4667,data/INDICES/NIFTY_50.parquet
-SENSEX,^BSESN,S&P BSE SENSEX,BSE,Benchmark,Benchmark 30 large-cap Indian stocks,1997-07-01,2026-09-24,7202,data/INDICES/SENSEX.parquet
-NIFTY_BANK,^NSEBANK,NIFTY BANK,NSE,Sectoral,Top liquid and large Indian banking stocks,2007-09-17,2026-09-24,4682,data/INDICES/NIFTY_BANK.parquet
-INDIA_VIX,^INDIAVIX,INDIA VIX,NSE,Volatility,India Volatility Index (Market Fear Gauge),2008-03-03,2026-09-24,4548,data/INDICES/INDIA_VIX.parquet
-NIFTY_IT,^CNXIT,NIFTY IT,NSE,Sectoral,Leading Indian information technology companies,2007-09-17,2026-09-24,4682,data/INDICES/NIFTY_IT.parquet
-NIFTY_PHARMA,^CNXPHARMA,NIFTY PHARMA,NSE,Sectoral,Leading Indian pharmaceutical and healthcare companies,2011-01-31,2026-09-24,3854,data/INDICES/NIFTY_PHARMA.parquet
-NIFTY_100,^CNX100,NIFTY 100,NSE,Broad Market,Top 100 large-cap companies listed on NSE,2005-11-30,2026-09-24,5121,data/INDICES/NIFTY_100.parquet
-NIFTY_200,^CNX200,NIFTY 200,NSE,Broad Market,Top 200 large and mid-cap companies listed on NSE,2004-01-01,2026-09-24,5604,data/INDICES/NIFTY_200.parquet
-NIFTY_500,^CRSLDX,NIFTY 500,NSE,Broad Market,Top 500 companies representing ~90% market cap,2005-09-26,2026-09-24,5164,data/INDICES/NIFTY_500.parquet
-NIFTY_MIDCAP_50,^NSEMDCP50,NIFTY MIDCAP 50,NSE,Broad Market,Top 50 liquid mid-cap Indian companies,2007-09-24,2026-09-24,4635,data/INDICES/NIFTY_MIDCAP_50.parquet
+NIFTY_50,^NSEI,NIFTY 50,NSE,Benchmark,Benchmark 50 large-cap Indian stocks,2007-09-17,2026-09-25,4668,data/INDICES/NIFTY_50.parquet
+SENSEX,^BSESN,S&P BSE SENSEX,BSE,Benchmark,Benchmark 30 large-cap Indian stocks,1997-07-01,2026-09-25,7203,data/INDICES/SENSEX.parquet
+NIFTY_BANK,^NSEBANK,NIFTY BANK,NSE,Sectoral,Top liquid and large Indian banking stocks,2007-09-17,2026-09-25,4683,data/INDICES/NIFTY_BANK.parquet
+INDIA_VIX,^INDIAVIX,INDIA VIX,NSE,Volatility,India Volatility Index (Market Fear Gauge),2008-03-03,2026-09-25,4549,data/INDICES/INDIA_VIX.parquet
+NIFTY_IT,^CNXIT,NIFTY IT,NSE,Sectoral,Leading Indian information technology companies,2007-09-17,2026-09-25,4683,data/INDICES/NIFTY_IT.parquet
+NIFTY_PHARMA,^CNXPHARMA,NIFTY PHARMA,NSE,Sectoral,Leading Indian pharmaceutical and healthcare companies,2011-01-31,2026-09-25,3855,data/INDICES/NIFTY_PHARMA.parquet
+NIFTY_100,^CNX100,NIFTY 100,NSE,Broad Market,Top 100 large-cap companies listed on NSE,2005-11-30,2026-09-25,5122,data/INDICES/NIFTY_100.parquet
+NIFTY_200,^CNX200,NIFTY 200,NSE,Broad Market,Top 200 large and mid-cap companies listed on NSE,2004-01-01,2026-09-25,5605,data/INDICES/NIFTY_200.parquet
+NIFTY_500,^CRSLDX,NIFTY 500,NSE,Broad Market,Top 500 companies representing ~90% market cap,2005-09-26,2026-09-25,5165,data/INDICES/NIFTY_500.parquet
+NIFTY_MIDCAP_50,^NSEMDCP50,NIFTY MIDCAP 50,NSE,Broad Market,Top 50 liquid mid-cap Indian companies,2007-09-24,2026-09-25,4636,data/INDICES/NIFTY_MIDCAP_50.parquet
