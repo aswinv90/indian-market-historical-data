@@ -1,5 +1,9 @@
 Ex_Date,Record_Date,Symbol,Company_Name,Series,Action_Type,Ratio_or_Amount,Purpose,Face_Value,ISIN,BC_Start_Date,BC_End_Date
+2026-10-28,2026-10-28,733GS2026,Government of India,GS,OTHER,,Redemption,100,IN0020230119,,
+2026-10-21,2026-10-21,SGBOCT26,2.50%GOLDBONDS2026Sr-II,GB,OTHER,,Redemption,3146,IN0020180249,,
 2026-10-06,2026-10-06,VERANDA,Veranda Learning Solutions Limited,EQ,DEMERGER,,Demerger,10,INE0IQ001011,,
+2026-09-30,2026-09-30,SAIL,Steel Authority of India Limited,EQ,DIVIDEND,2.35,Dividend - Rs 2.35 Per Share,10,INE114A01011,,
+2026-09-28,2026-09-28,AASTHA,Aastha Spintex Limited,EQ,BONUS,1:1,Bonus 1:1,10,INE2FMX01012,,
 2026-09-25,2026-09-25,LOTUSDEV,Sri Lotus Developers and Realty Limited,EQ,DIVIDEND,0.50,Dividend - Re 0.50 Per Share,1,INE0V9Q01010,,
 2026-09-24,2026-09-24,ARFIN,Arfin India Limited,EQ,DIVIDEND,0.12,Interim Dividend - Re 0.12 Per Share,1,INE784R01023,,
 2026-09-24,2026-09-24,ENGINERSIN,Engineers India Limited,EQ,DIVIDEND,2.50,Dividend - Rs 2.50 Per Share,5,INE510A01010,,
