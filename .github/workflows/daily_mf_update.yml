@@ -2,8 +2,8 @@ name: Daily Mutual Funds NAV Update
 
 on:
   schedule:
-    # Runs every day at 13:17 UTC = 06:47 PM IST
-    - cron: '17 13 * * *'
+    # Runs every day at 13:15 UTC = 06:45 PM IST
+    - cron: '15 13 * * *'
 
   workflow_dispatch:
 

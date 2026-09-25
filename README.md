@@ -294,13 +294,13 @@ scripts/
 .github/workflows/
 ├── daily_macro_update.yml          # 06:35 PM IST — Macro indicators (India 10Y Yield, Forex, Policy Rates)
 ├── daily_sgb_update.yml            # 06:40 PM IST — Sovereign Gold Bonds (SGB) master & secondary quotes
-├── daily_mf_update.yml                # 06:47 PM IST — Mutual Funds NAV from inception
-├── daily_commodities_update.yml       # 06:53 PM IST — Gold & Silver bullion spot rates
-├── daily_unlisted_update.yml          # 06:58 PM IST — Top 22 unlisted / pre-IPO equities
-├── daily_indices_update.yml           # 07:04 PM IST — Benchmark & Sectoral indices
-├── daily_corporate_actions_update.yml # 07:11 PM IST — Corporate Actions Master Update
-├── daily_flows_update.yml             # 07:16 PM IST — Institutional Capital Flows (FII / DII)
-└── daily_stocks_update.yml            # 07:25 PM IST — NSE & BSE stocks (with circuit breaker)
+├── daily_mf_update.yml             # 06:45 PM IST — Mutual Funds NAV from inception
+├── daily_commodities_update.yml    # 07:15 PM IST — Gold & Silver bullion spot rates (30m buffer after MF)
+├── daily_unlisted_update.yml       # 07:21 PM IST — Top 22 unlisted / pre-IPO equities
+├── daily_indices_update.yml        # 07:27 PM IST — Benchmark & Sectoral indices
+├── daily_corporate_actions_update.yml # 07:33 PM IST — Corporate Actions Master Update
+├── daily_flows_update.yml          # 07:39 PM IST — Institutional Capital Flows (FII / DII)
+└── daily_stocks_update.yml         # 07:50 PM IST — NSE & BSE stocks (with circuit breaker)
 ```
 
 ---
@@ -453,17 +453,17 @@ Data is automatically updated strictly on **Indian Market Working Days** (NSE & 
 |----------|-------------|----------------|------------------|------------------------|
 | `daily_macro_update.yml` | **Macro Indicators (10Y Yield & Forex)** | **6:35 PM IST** (13:05 UTC) | ~10 seconds | Sovereign 10Y G-Sec yield & FX rates; 100% independent |
 | `daily_sgb_update.yml` | **Sovereign Gold Bonds (SGB)** | **6:40 PM IST** (13:10 UTC) | ~10 seconds | Catalog status & secondary quotes; 100% independent |
-| `daily_mf_update.yml` | **Mutual Funds (Daily NAV)** | **6:47 PM IST** (13:17 UTC) | ~35 seconds | AMFI direct fetch; 100% independent |
-| `daily_commodities_update.yml` | **Commodities (Gold & Silver)** | **6:53 PM IST** (13:23 UTC) | ~10 seconds | Bullion spot rates; 100% independent |
-| `daily_unlisted_update.yml` | **Unlisted & Pre-IPO Equities** | **6:58 PM IST** (13:28 UTC) | ~5 seconds | Indicative milestones; 100% independent |
-| `daily_indices_update.yml` | **Benchmark & Sectoral Indices** | **7:04 PM IST** (13:34 UTC) | ~5 seconds | Key indices & India VIX; 100% independent |
-| `daily_corporate_actions_update.yml` | **Corporate Actions Master** | **7:11 PM IST** (13:41 UTC) | ~5 seconds | Bonus, Splits, Dividends; 100% independent |
-| `daily_flows_update.yml` | **Institutional Capital Flows** | **7:16 PM IST** (13:46 UTC) | ~10 seconds | FII/DII cash & F&O sentiment; 100% independent |
-| `daily_stocks_update.yml` | **Equities (NSE & BSE)** | **7:25 PM IST** (13:55 UTC) | ~30–50 minutes | Built-in circuit breaker & cooldown; 90m cap |
+| `daily_mf_update.yml` | **Mutual Funds (Daily NAV)** | **6:45 PM IST** (13:15 UTC) | ~1–5 minutes | AMFI direct fetch; 30-min isolated processing window |
+| `daily_commodities_update.yml` | **Commodities (Gold & Silver)** | **7:15 PM IST** (13:45 UTC) | ~10 seconds | Bullion spot rates; 100% independent |
+| `daily_unlisted_update.yml` | **Unlisted & Pre-IPO Equities** | **7:21 PM IST** (13:51 UTC) | ~5 seconds | Indicative milestones; 100% independent |
+| `daily_indices_update.yml` | **Benchmark & Sectoral Indices** | **7:27 PM IST** (13:57 UTC) | ~5 seconds | Key indices & India VIX; 100% independent |
+| `daily_corporate_actions_update.yml` | **Corporate Actions Master** | **7:33 PM IST** (14:03 UTC) | ~5 seconds | Bonus, Splits, Dividends; 100% independent |
+| `daily_flows_update.yml` | **Institutional Capital Flows** | **7:39 PM IST** (14:09 UTC) | ~10 seconds | FII/DII cash & F&O sentiment; 100% independent |
+| `daily_stocks_update.yml` | **Equities (NSE & BSE)** | **7:50 PM IST** (14:20 UTC) | ~30–50 minutes | Built-in circuit breaker & cooldown; 90m cap |
 
 > **Zero Blast Radius:** Because each asset class runs in its own dedicated workflow, a delay or rate limit in stock fetching has zero impact on Mutual Funds, Commodities, Indices, Corporate Actions, Institutional Flows, Sovereign Gold Bonds, or Macroeconomic indicators. Everything is committed and available immediately every evening.
 >
-> **Evening Readiness:** Running between 6:35 PM and 7:25 PM IST ensures that all market closes, settlements, and institutional reports are committed early in the evening, well before nightfall.
+> **Evening Readiness:** Running between 6:35 PM and 7:50 PM IST ensures that all market closes, settlements, and institutional reports are committed early in the evening, well before nightfall.
 >
 > **Trading Holiday Gate:** The automated pipeline evaluates exchange holiday calendars. If a day is a declared market holiday (e.g. Republic Day, Holi, etc.), the run safely exits without producing empty commits.
 >

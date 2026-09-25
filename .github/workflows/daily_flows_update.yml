@@ -2,8 +2,8 @@ name: Daily Institutional Flows Update
 
 on:
   schedule:
-    # Runs every day at 13:46 UTC = 07:16 PM IST (after Corporate Actions, before Stocks)
-    - cron: '46 13 * * *'
+    # Runs every day at 14:09 UTC = 07:39 PM IST (after Corporate Actions, before Stocks)
+    - cron: '9 14 * * *'
 
   workflow_dispatch:
 

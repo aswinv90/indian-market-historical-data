@@ -2,8 +2,8 @@ name: Daily Corporate Actions Master Update
 
 on:
   schedule:
-    # Runs every day at 13:41 UTC = 07:11 PM IST (prior to stocks update)
-    - cron: '41 13 * * *'
+    # Runs every day at 14:03 UTC = 07:33 PM IST (prior to stocks update)
+    - cron: '3 14 * * *'
 
   workflow_dispatch:
 
