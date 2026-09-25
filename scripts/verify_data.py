@@ -107,6 +107,34 @@ def check_flows_dataset():
             print(f"  ✅ {label:<32}: {len(df):>5,} rows | {min_val} -> {max_val} | {p.stat().st_size/1024:.1f} KB")
         else:
             print(f"  ❌ {label:<32}: MISSING ({fname})")
+def check_sgb_dataset():
+    """Verify Sovereign Gold Bonds (SGB) datasets in data/SGB/."""
+    sgb_dir = Path(__file__).resolve().parent.parent / "data" / "SGB"
+    if not sgb_dir.exists():
+        return
+    print(f"\n{'─'*60}")
+    print("  SOVEREIGN GOLD BONDS (SGB) 2015-2024")
+    print(f"{'─'*60}")
+    targets = [
+        ("sgb_master_catalog.parquet", "Master Catalog (All 67 Tranches)"),
+        ("sgb_cash_flows.parquet", "Cash Flows & Redemption Schedule"),
+        ("sgb_market_prices.parquet", "Secondary Market Prices & Quotes")
+    ]
+    for fname, label in targets:
+        p = sgb_dir / fname
+        if p.exists():
+            df = pd.read_parquet(p)
+            size_kb = p.stat().st_size / 1024
+            extra = ""
+            if "Total_CAGR_Pct" in df.columns:
+                extra = f"| Avg CAGR: {df['Total_CAGR_Pct'].mean():.1f}% | Active: {(df['Status']=='ACTIVE').sum()}, Redeemed: {(df['Status']=='REDEEMED').sum()}"
+            elif "Payment_Date" in df.columns:
+                extra = f"| Range: {df['Payment_Date'].min()} -> {df['Payment_Date'].max()}"
+            elif "LTP" in df.columns:
+                extra = f"| Mean LTP: ₹{df['LTP'].mean():,.1f}"
+            print(f"  ✅ {label:<34}: {len(df):>5,} rows {extra} | {size_kb:.1f} KB")
+        else:
+            print(f"  ❌ {label:<34}: MISSING ({fname})")
     print()
 
 
@@ -134,6 +162,7 @@ def main():
     print(f"{'='*60}\n")
 
     check_flows_dataset()
+    check_sgb_dataset()
 
     # ── Scan all files ─────────────────────────────────────────────────────────
     results = []

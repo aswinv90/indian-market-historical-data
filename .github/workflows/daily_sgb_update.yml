@@ -1,0 +1,59 @@
+name: Daily Sovereign Gold Bonds (SGB) Update
+
+on:
+  schedule:
+    # Runs every weekday at 13:10 UTC = 06:40 PM IST (kickstarts the evening pipeline)
+    - cron: '10 13 * * 1-5'
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-sgb:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check if session was an Indian Market Working Day
+        id: market_check
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "Manual trigger detected. Forcing update."
+            echo "is_open=true" >> $GITHUB_OUTPUT
+          else
+            python scripts/check_market_day.py
+          fi
+
+      - name: Run daily SGB update
+        if: steps.market_check.outputs.is_open == 'true'
+        run: python scripts/update_sgb.py
+
+      - name: Commit and push updated SGB data
+        if: steps.market_check.outputs.is_open == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/SGB/
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(sgb): daily sovereign gold bonds update $(date -u +'%Y-%m-%d')"
+            git pull --rebase origin main
+            git push origin main
+          else
+            echo "No changes to commit for Sovereign Gold Bonds."
+          fi

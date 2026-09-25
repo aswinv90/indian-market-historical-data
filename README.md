@@ -1,6 +1,6 @@
-# 📈 Indian Historical Stock Prices, Indices, Corporate Actions, Institutional Flows, Commodities, Mutual Funds & Unlisted Shares
+# 📈 Indian Historical Stock Prices, Indices, Corporate Actions, Institutional Flows, Sovereign Gold Bonds, Commodities, Mutual Funds & Unlisted Shares
 
-A free, open dataset of **complete daily historical stock price data** (NSE & BSE), **major benchmark and sectoral indices** (NIFTY 50, SENSEX, etc.), **comprehensive corporate actions master catalog** (Bonus, Splits, Dividends, Rights, Demergers 1990 → Present), **institutional capital flows & derivatives positioning** (FII/DII daily cash flows & FII Long Ratio %), **50+ years of historical Gold & Silver bullion rates**, **complete daily NAV history of all Indian Mutual Funds from inception**, and **historical valuations of major Indian Unlisted / Pre-IPO shares (2019 → Present)** — updated automatically every market working day.
+A free, open dataset of **complete daily historical stock price data** (NSE & BSE), **major benchmark and sectoral indices** (NIFTY 50, SENSEX, etc.), **comprehensive corporate actions master catalog** (Bonus, Splits, Dividends, Rights, Demergers 1990 → Present), **institutional capital flows & derivatives positioning** (FII/DII daily cash flows & FII Long Ratio %), **complete master catalog of Sovereign Gold Bonds (SGB 2015 → 2024)** with all 67 tranches, cash flow schedules, and secondary market prices, **50+ years of historical Gold & Silver bullion rates**, **complete daily NAV history of all Indian Mutual Funds from inception**, and **historical valuations of major Indian Unlisted / Pre-IPO shares (2019 → Present)** — updated automatically every market working day.
 
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support%20Project-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/aswinv)
 
@@ -40,6 +40,13 @@ A free, open dataset of **complete daily historical stock price data** (NSE & BS
 | **Derivatives Positioning & Sentiment** | Participant Open Interest (Client, DII, FII, Pro) & **FII Long Ratio %** | `data/FLOWS/fii_derivatives.parquet`<br>`data/FLOWS/fii_derivatives.csv` | Daily (2024 → Present) | **673 daily records** |
 | **NSDL Monthly Macro Flows** | Foreign Portfolio Investors (FPI) Net Equity vs Debt Inflows in ₹ Crores | `data/FLOWS/fpi_monthly_history.parquet`<br>`data/FLOWS/fpi_monthly_history.csv` | 2005 → Present (21+ yrs) | **255 monthly records** |
 
+### Sovereign Gold Bonds (SGB 2015 → 2024)
+| Dataset | Scope & Description | Format | Date Range | Total Records |
+|---------|---------------------|--------|------------|---------------|
+| **SGB Master Catalog** | **All 67 Tranches** (Series I 2015-16 → Series IV 2023-24) with Issue & Redemption prices, 146.96 tonnes subscribed (₹72,274 Cr), and realized/expected CAGR % | `data/SGB/sgb_master_catalog.parquet`<br>`data/SGB/sgb_master_catalog.csv` | 2015 → 2032 (Maturity) | **67 tranches** |
+| **Cash Flows Schedule** | Complete semi-annual coupon schedule (2.75% / 2.50%) & principal redemption payouts for every bond | `data/SGB/sgb_cash_flows.parquet`<br>`data/SGB/sgb_cash_flows.csv` | 2016 → 2032 | **1,139 cash flow events** |
+| **Secondary Market Quotes** | Live trading quotes on NSE & BSE, LTP, Spot Gold comparison, and Discount/Premium % | `data/SGB/sgb_market_prices.parquet`<br>`data/SGB/sgb_market_prices.csv` | Active Tranches | **45 active bonds** |
+
 ### Commodities (Bullion)
 | Commodity | Coverage & Purities | Format | Date Range |
 |-----------|---------------------|--------|------------|
@@ -60,6 +67,7 @@ A free, open dataset of **complete daily historical stock price data** (NSE & BS
 - **Total index files:** 10 + 1 master catalog
 - **Total corporate actions catalog:** 43,748 events (Parquet + CSV)
 - **Total institutional flows datasets:** 3 unified datasets (Cash, Derivatives OI, NSDL Monthly)
+- **Total sovereign gold bonds datasets:** 3 unified datasets (Master Catalog, Cash Flows, Market Prices)
 - **Total commodities files:** 2
 - **Total mutual fund partitions:** 10 + 1 master index
 - **Total unlisted shares datasets:** 1 unified master file
@@ -124,6 +132,29 @@ Each stock Parquet file contains daily records with the following columns:
 * **NSDL Macro History (`data/FLOWS/fpi_monthly_history.parquet` & `.csv`):**
   * `Year`, `Month`, `Equity_Net_Cr`, `Debt_Net_Cr`, `Total_Net_Cr`, `Source` (NSDL)
 
+### Sovereign Gold Bonds (`data/SGB/`)
+* **Master Catalog (`data/SGB/sgb_master_catalog.parquet` & `.csv`):**
+  * `Sr_No`: Chronological issue index (1 to 67)
+  * `Tranche`: Standardized series name (e.g. `2015-16 Series I`, `2023-24 Series IV`)
+  * `Symbol`: Exchange trading symbol (e.g. `SGBNOV23`, `SGBFEB32IV`)
+  * `BSE_Code`: BSE scrip code (e.g. `539428`, `544128`)
+  * `ISIN`: 12-character alphanumeric identifier (`IN0020150085` to `IN0020230184`)
+  * `Issue_Date`, `Maturity_Date`, `Premature_Exit_Date`: Tenor timelines (8 years tenor; 5 years lock-in)
+  * `Issue_Price`, `Online_Price`: Initial allotment price & discounted digital price (₹50 discount)
+  * `Coupon_Rate_Pct`: Semi-annual coupon interest rate (2.75% for first 3 tranches; 2.50% thereafter)
+  * `Annual_Interest_Per_Gram`: Fixed annual interest payout per gram (₹)
+  * `Units_Subscribed_Grams`: Total volume subscribed in grams (146.96 tonnes total)
+  * `Total_Amount_Cr`: Total sovereign capital raised (₹72,274 Cr across all tranches)
+  * `Status`: `REDEEMED` or `ACTIVE`
+  * `Redemption_Price`: Official RBI final settlement price (for matured series) or spot reference
+  * `Secondary_Market_LTP`: Recent traded price on stock exchanges
+  * `Capital_Gains_Pct`: Percentage price appreciation
+  * `Total_CAGR_Pct`: True annualized compounded return factoring both price appreciation and all 16 semi-annual coupons
+* **Cash Flow Schedule (`data/SGB/sgb_cash_flows.parquet` & `.csv`):**
+  * `Symbol`, `Tranche`, `ISIN`, `Payment_Date`, `Payment_Type` (`COUPON` / `REDEMPTION`), `Amount_Per_Gram` (₹)
+* **Secondary Market Quotes (`data/SGB/sgb_market_prices.parquet` & `.csv`):**
+  * `Symbol`, `Tranche`, `ISIN`, `Exchange` (`NSE`/`BSE`), `LTP`, `Spot_Gold_Rate`, `Premium_Discount_Pct`, `Issue_Price`, `Maturity_Date`, `Status`
+
 ### Commodities (Gold & Silver)
 * **Gold (`data/COMMODITIES/GOLD_INR.parquet`):**
   * `Gold_24K_10g`, `Gold_24K_1g` (Pure 24 Karat 99.9%)
@@ -182,6 +213,13 @@ data/
 │   ├── fii_derivatives.csv       # Tabular derivatives positioning CSV
 │   ├── fpi_monthly_history.parquet # 21+ Years (2005 - 2026) NSDL monthly equity/debt flows
 │   └── fpi_monthly_history.csv   # Tabular monthly macro flow history
+├── SGB/
+│   ├── sgb_master_catalog.parquet # All 67 SGB tranches (2015-2024), Issue/Redemption Prices, CAGR %
+│   ├── sgb_master_catalog.csv     # Complete tabular catalog for spreadsheet inspection
+│   ├── sgb_cash_flows.parquet     # 1,139 semi-annual coupon & principal redemption events
+│   ├── sgb_cash_flows.csv         # Tabular cash flows schedule
+│   ├── sgb_market_prices.parquet  # Live trading quotes, LTP, Spot Gold comparison, Discount/Premium %
+│   └── sgb_market_prices.csv      # Tabular secondary market quotes
 ├── COMMODITIES/
 │   ├── GOLD_INR.parquet      # 50+ yrs (1970 - present) 24K, 22K, 18K in ₹/10g & ₹/1g
 │   └── SILVER_INR.parquet    # 50+ yrs (1970 - present) 999 & 925 in ₹/kg, 10g & 1g
@@ -201,6 +239,8 @@ scripts/
 ├── update_corporate_actions.py     # Daily incremental corporate actions updater
 ├── fetch_all_flows.py              # One-time full institutional flows bootstrap
 ├── update_flows.py                 # Daily incremental institutional flows updater
+├── build_sgb.py                    # Complete builder for all 67 Sovereign Gold Bond tranches
+├── update_sgb.py                   # Daily updater and market price tracker for SGBs
 ├── update_commodities.py           # Daily commodities updater (Gold & Silver)
 ├── update_mf.py                    # Daily mutual funds NAV updater
 ├── build_unlisted.py               # Full compiler for unlisted equity valuations (2019 - Present)
@@ -209,6 +249,7 @@ scripts/
 ├── download_symbol_lists.py        # Refresh stock symbol master lists
 └── utils.py                        # Shared helpers
 .github/workflows/
+├── daily_sgb_update.yml            # 06:40 PM IST — Sovereign Gold Bonds (SGB) master & secondary quotes
 ├── daily_mf_update.yml                # 06:47 PM IST — Mutual Funds NAV from inception
 ├── daily_commodities_update.yml       # 06:53 PM IST — Gold & Silver bullion spot rates
 ├── daily_unlisted_update.yml          # 06:58 PM IST — Top 22 unlisted / pre-IPO equities
@@ -266,6 +307,19 @@ latest_fao = derivatives.iloc[-1]
 print(f"Date: {latest_fao['Date']}")
 print(f"FII Index Futures Long: {latest_fao['FII_Index_Futures_Long']:,} | Short: {latest_fao['FII_Index_Futures_Short']:,}")
 print(f"FII Long Ratio: {latest_fao['FII_Long_Ratio_Pct']}%")
+
+# Sovereign Gold Bonds (Master Catalog, Returns & Cash Flows)
+sgb = pd.read_parquet("data/SGB/sgb_master_catalog.parquet")
+print(sgb[["Tranche", "Symbol", "Issue_Price", "Status", "Total_CAGR_Pct"]].head())
+
+# Find all redeemed tranches and realized annualized CAGR returns
+redeemed = sgb[sgb["Status"] == "REDEEMED"]
+print(redeemed[["Tranche", "Issue_Date", "Maturity_Date", "Issue_Price", "Redemption_Price", "Total_CAGR_Pct"]])
+
+# Secondary market quotes & discount to spot gold for active bonds
+sgb_mkt = pd.read_parquet("data/SGB/sgb_market_prices.parquet")
+discounted = sgb_mkt[sgb_mkt["Premium_Discount_Pct"] < 0]
+print(discounted[["Symbol", "Tranche", "LTP", "Spot_Gold_Rate", "Premium_Discount_Pct"]].head())
 
 # Commodities (Gold & Silver - 50+ Years)
 gold = pd.read_parquet("data/COMMODITIES/GOLD_INR.parquet")
@@ -332,10 +386,11 @@ print(f"Loaded {len(dfs)} stocks")
 
 ## 🔄 Update Schedule
 
-Data is automatically updated strictly on **Indian Market Working Days** (NSE & BSE trading days, excluding weekends and official stock exchange trading holidays) via **7 dedicated, isolated workflows**:
+Data is automatically updated strictly on **Indian Market Working Days** (NSE & BSE trading days, excluding weekends and official stock exchange trading holidays) via **8 dedicated, isolated workflows**:
 
 | Workflow | Asset Class | Execution Time | Average Duration | Isolation & Resilience |
 |----------|-------------|----------------|------------------|------------------------|
+| `daily_sgb_update.yml` | **Sovereign Gold Bonds (SGB)** | **6:40 PM IST** (13:10 UTC) | ~10 seconds | Catalog status & secondary quotes; 100% independent |
 | `daily_mf_update.yml` | **Mutual Funds (Daily NAV)** | **6:47 PM IST** (13:17 UTC) | ~35 seconds | AMFI direct fetch; 100% independent |
 | `daily_commodities_update.yml` | **Commodities (Gold & Silver)** | **6:53 PM IST** (13:23 UTC) | ~10 seconds | Bullion spot rates; 100% independent |
 | `daily_unlisted_update.yml` | **Unlisted & Pre-IPO Equities** | **6:58 PM IST** (13:28 UTC) | ~5 seconds | Indicative milestones; 100% independent |
@@ -344,9 +399,9 @@ Data is automatically updated strictly on **Indian Market Working Days** (NSE & 
 | `daily_flows_update.yml` | **Institutional Capital Flows** | **7:16 PM IST** (13:46 UTC) | ~10 seconds | FII/DII cash & F&O sentiment; 100% independent |
 | `daily_stocks_update.yml` | **Equities (NSE & BSE)** | **7:25 PM IST** (13:55 UTC) | ~30–50 minutes | Built-in circuit breaker & cooldown; 90m cap |
 
-> **Zero Blast Radius:** Because each asset class runs in its own dedicated workflow, a delay or rate limit in stock fetching has zero impact on Mutual Funds, Commodities, Indices, Corporate Actions, or Institutional Flows. Everything is committed and available immediately every evening.
+> **Zero Blast Radius:** Because each asset class runs in its own dedicated workflow, a delay or rate limit in stock fetching has zero impact on Mutual Funds, Commodities, Indices, Corporate Actions, Institutional Flows, or Sovereign Gold Bonds. Everything is committed and available immediately every evening.
 >
-> **Evening Readiness:** Running between 6:45 PM and 7:25 PM IST ensures that all market closes, settlements, and institutional reports are committed early in the evening, well before nightfall.
+> **Evening Readiness:** Running between 6:40 PM and 7:25 PM IST ensures that all market closes, settlements, and institutional reports are committed early in the evening, well before nightfall.
 >
 > **Trading Holiday Gate:** The automated pipeline evaluates exchange holiday calendars. If a day is a declared market holiday (e.g. Republic Day, Holi, etc.), the run safely exits without producing empty commits.
 >
