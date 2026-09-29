@@ -3,6 +3,10 @@
 A free, open dataset of **complete daily historical stock price data** (NSE & BSE), **major benchmark and sectoral indices** (NIFTY 50, SENSEX, etc.), **comprehensive corporate actions master catalog** (Bonus, Splits, Dividends, Rights, Demergers 1990 → Present), **institutional capital flows & derivatives positioning** (FII/DII daily cash flows & FII Long Ratio %), **complete master catalog of Sovereign Gold Bonds (SGB 2015 → 2024)** with all 67 tranches, cash flow schedules, and secondary market prices, **macroeconomic & fixed income indicators** (India 10-Year Benchmark G-Sec Yield, Foreign Exchange Rates, RBI Policy Rates & CPI Inflation), **50+ years of historical Gold & Silver bullion rates**, **complete daily NAV history of all Indian Mutual Funds from inception**, and **historical valuations of major Indian Unlisted / Pre-IPO shares (2019 → Present)** — updated automatically every market working day.
 
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support%20Project-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/aswinv)
+[![Daily Stocks](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_stocks_update.yml/badge.svg)](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_stocks_update.yml)
+[![Daily Flows](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_flows_update.yml/badge.svg)](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_flows_update.yml)
+[![Daily Mutual Funds](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_mf_update.yml/badge.svg)](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_mf_update.yml)
+[![Daily Macro](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_macro_update.yml/badge.svg)](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_macro_update.yml)
 
 ---
 
@@ -449,17 +453,17 @@ print(f"Loaded {len(dfs)} stocks")
 
 Data is automatically updated strictly on **Indian Market Working Days** (NSE & BSE trading days, excluding weekends and official stock exchange trading holidays) via **9 dedicated, isolated workflows**:
 
-| Workflow | Asset Class | Execution Time | Average Duration | Isolation & Resilience |
-|----------|-------------|----------------|------------------|------------------------|
-| `daily_macro_update.yml` | **Macro Indicators (10Y Yield & Forex)** | **6:35 PM IST** (13:05 UTC) | ~10 seconds | Sovereign 10Y G-Sec yield & FX rates; 100% independent |
-| `daily_sgb_update.yml` | **Sovereign Gold Bonds (SGB)** | **6:40 PM IST** (13:10 UTC) | ~10 seconds | Catalog status & secondary quotes; 100% independent |
-| `daily_mf_update.yml` | **Mutual Funds (Daily NAV)** | **6:45 PM IST** (13:15 UTC) | ~1–5 minutes | AMFI direct fetch; 30-min isolated processing window |
-| `daily_commodities_update.yml` | **Commodities (Gold & Silver)** | **7:15 PM IST** (13:45 UTC) | ~10 seconds | Bullion spot rates; 100% independent |
-| `daily_unlisted_update.yml` | **Unlisted & Pre-IPO Equities** | **7:21 PM IST** (13:51 UTC) | ~5 seconds | Indicative milestones; 100% independent |
-| `daily_indices_update.yml` | **Benchmark & Sectoral Indices** | **7:27 PM IST** (13:57 UTC) | ~5 seconds | Key indices & India VIX; 100% independent |
-| `daily_corporate_actions_update.yml` | **Corporate Actions Master** | **7:33 PM IST** (14:03 UTC) | ~5 seconds | Bonus, Splits, Dividends; 100% independent |
-| `daily_flows_update.yml` | **Institutional Capital Flows** | **7:39 PM IST** (14:09 UTC) | ~10 seconds | FII/DII cash & F&O sentiment; 100% independent |
-| `daily_stocks_update.yml` | **Equities (NSE & BSE)** | **7:50 PM IST** (14:20 UTC) | ~30–50 minutes | Built-in circuit breaker & cooldown; 90m cap |
+| Workflow | Asset Class | Status Badge | Execution Time | Average Duration | Isolation & Resilience |
+|----------|-------------|:------------:|----------------|------------------|------------------------|
+| `daily_macro_update.yml` | **Macro Indicators (10Y Yield & Forex)** | [![Macro](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_macro_update.yml/badge.svg)](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_macro_update.yml) | **6:35 PM IST** (13:05 UTC) | ~10 seconds | Sovereign 10Y G-Sec yield & FX rates; 100% independent |
+| `daily_sgb_update.yml` | **Sovereign Gold Bonds (SGB)** | [![SGB](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_sgb_update.yml/badge.svg)](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_sgb_update.yml) | **6:40 PM IST** (13:10 UTC) | ~10 seconds | Catalog status & secondary quotes; 100% independent |
+| `daily_mf_update.yml` | **Mutual Funds (Daily NAV)** | [![MF](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_mf_update.yml/badge.svg)](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_mf_update.yml) | **6:45 PM IST** (13:15 UTC) | ~1–5 minutes | AMFI direct fetch; 30-min isolated processing window |
+| `daily_commodities_update.yml` | **Commodities (Gold & Silver)** | [![Commodities](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_commodities_update.yml/badge.svg)](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_commodities_update.yml) | **7:15 PM IST** (13:45 UTC) | ~10 seconds | Bullion spot rates; 100% independent |
+| `daily_unlisted_update.yml` | **Unlisted & Pre-IPO Equities** | [![Unlisted](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_unlisted_update.yml/badge.svg)](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_unlisted_update.yml) | **7:21 PM IST** (13:51 UTC) | ~5 seconds | Indicative milestones; 100% independent |
+| `daily_indices_update.yml` | **Benchmark & Sectoral Indices** | [![Indices](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_indices_update.yml/badge.svg)](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_indices_update.yml) | **7:27 PM IST** (13:57 UTC) | ~5 seconds | Key indices & India VIX; 100% independent |
+| `daily_corporate_actions_update.yml` | **Corporate Actions Master** | [![Corporate Actions](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_corporate_actions_update.yml/badge.svg)](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_corporate_actions_update.yml) | **7:33 PM IST** (14:03 UTC) | ~5 seconds | Bonus, Splits, Dividends; 100% independent |
+| `daily_flows_update.yml` | **Institutional Capital Flows** | [![Flows](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_flows_update.yml/badge.svg)](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_flows_update.yml) | **7:39 PM IST** (14:09 UTC) | ~10 seconds | FII/DII cash & F&O sentiment; 100% independent |
+| `daily_stocks_update.yml` | **Equities (NSE & BSE)** | [![Stocks](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_stocks_update.yml/badge.svg)](https://github.com/aswinv90/indian-market-historical-data/actions/workflows/daily_stocks_update.yml) | **7:50 PM IST** (14:20 UTC) | ~30–50 minutes | Built-in circuit breaker & cooldown; 90m cap |
 
 > **Zero Blast Radius:** Because each asset class runs in its own dedicated workflow, a delay or rate limit in stock fetching has zero impact on Mutual Funds, Commodities, Indices, Corporate Actions, Institutional Flows, Sovereign Gold Bonds, or Macroeconomic indicators. Everything is committed and available immediately every evening.
 >
