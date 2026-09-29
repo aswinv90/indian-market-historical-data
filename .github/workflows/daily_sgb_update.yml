@@ -51,9 +51,15 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/SGB/
           if ! git diff --cached --quiet; then
-            git commit -m "chore(sgb): daily sovereign gold bonds update $(date -u +'%Y-%m-%d')"
+            git commit -m "[SUCCESS] chore(sgb): daily sovereign gold bonds update $(date -u +'%Y-%m-%d')" \
+                       -m "Status: SUCCESS - Execution completed successfully."
             git pull --rebase origin main
             git push origin main
           else
             echo "No changes to commit for Sovereign Gold Bonds."
           fi
+
+      - name: Report failure status
+        if: failure()
+        run: |
+          echo "::error::[FAILED] Daily sovereign gold bonds update run failed. Check logs for details."

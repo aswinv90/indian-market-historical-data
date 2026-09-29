@@ -51,9 +51,15 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/FLOWS/
           if ! git diff --cached --quiet; then
-            git commit -m "chore(flows): daily institutional capital flows update $(date -u +'%Y-%m-%d')"
+            git commit -m "[SUCCESS] chore(flows): daily institutional capital flows update $(date -u +'%Y-%m-%d')" \
+                       -m "Status: SUCCESS - Execution completed successfully."
             git pull --rebase origin main
             git push origin main
           else
             echo "No changes to commit for Institutional Flows."
           fi
+
+      - name: Report failure status
+        if: failure()
+        run: |
+          echo "::error::[FAILED] Daily institutional flows update run failed. Check logs for details."
