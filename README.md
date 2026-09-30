@@ -501,6 +501,12 @@ If this free, open dataset saves you time, powers your research, or assists your
 
 ---
 
+## 👨‍💻 Author & Maintainer
+
+Created and actively maintained by **[Aswin Vijayakumar](https://github.com/aswinv90)** ([@aswinv90](https://github.com/aswinv90)).
+
+---
+
 ## ⚠️ Disclaimer
 
 This dataset is provided for **educational and personal research purposes only**. It is not financial advice. Always verify data independently before use in any decision-making.
