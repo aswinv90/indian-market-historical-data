@@ -35,8 +35,8 @@ jobs:
 
       - name: Commit and push unlisted data if updated
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name  "Aswin"
+          git config user.email "aswinvijayakumar@gmail.com"
           git add data/UNLISTED/
           if ! git diff --cached --quiet; then
             git commit -m "[SUCCESS] chore(unlisted): daily unlisted share valuation update $(date -u +'%Y-%m-%d')" \
