@@ -509,18 +509,20 @@ Created and actively maintained by **[Aswin Vijayakumar](https://github.com/aswi
 
 ## ⚠️ Disclaimer
 
-This dataset is provided for **educational and personal research purposes only**. It is not financial advice. Always verify data independently before use in any decision-making.
+- **Educational & Research Only**: This repository, its automated pipelines, and all accompanying datasets are provided strictly for educational, personal research, and historical analysis purposes.
+- **Not Financial Advice**: Nothing contained in this repository constitutes financial, investment, legal, or tax advice, nor a recommendation to buy, sell, or hold any security, derivative, commodity, or financial instrument.
+- **No Warranty & Limitation of Liability**: All data is provided **"AS IS"** without warranties of any kind regarding completeness, timeliness, accuracy, or fitness for a particular purpose. In no event shall the author or maintainers be held liable for any financial losses, trading damages, or capital loss arising from the use of or reliance upon this data. Always verify information independently with official exchange and regulatory sources.
 
 ---
 
 ## 📜 License
 
-**Personal Use Only.**
+This project is licensed under the **Non-Commercial Research and Personal Use License**. See the full text in the [LICENSE](LICENSE) file.
 
-This dataset is free to use for **personal, non-commercial purposes** (learning, research, personal projects).
+- **Free for Personal Use**: Permitted for learning, academic research, backtesting experiments, and personal non-commercial projects.
+- ❌ **Commercial Restrictions**: Commercial use, redistribution, resale, sublicensing, or integration into paid products, SaaS services, or proprietary automated trading systems is **strictly prohibited** without prior written authorization from the author.
 
-❌ Commercial use, redistribution, resale, or use in paid products/services is **not permitted** without explicit written permission from the author.
+For commercial licensing, custom data pipelines, or corporate inquiries:  
+📩 **mail@aswinv.com**
 
-For permissions or enquiries: **mail@aswinv.com**
-
-© 2026 aswinv90. All rights reserved.
+© 2026 Aswin V ([@aswinv90](https://github.com/aswinv90)). All rights reserved.
