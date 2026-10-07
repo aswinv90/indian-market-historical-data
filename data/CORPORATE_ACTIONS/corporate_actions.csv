@@ -1,6 +1,7 @@
 Ex_Date,Record_Date,Symbol,Company_Name,Series,Action_Type,Ratio_or_Amount,Purpose,Face_Value,ISIN,BC_Start_Date,BC_End_Date
 2026-10-28,2026-10-28,733GS2026,Government of India,GS,OTHER,,Redemption,100,IN0020230119,,
 2026-10-21,2026-10-21,SGBOCT26,2.50%GOLDBONDS2026Sr-II,GB,OTHER,,Redemption,3146,IN0020180249,,
+2026-10-16,2026-10-16,BANSALWIRE,Bansal Wire Industries Limited,EQ,SPLIT,5:1,Face Value Split (Sub-Division) - From Rs 5/- Per Share To Re 1/- Per Share,5,INE0B9K01025,,
 2026-10-09,2026-10-09,ACCELYA,Accelya Solutions India Limited,EQ,DIVIDEND,35.00,Dividend - Rs 35 Per Share,10,INE793A01012,,
 2026-10-09,2026-10-09,MOLDTECH,Mold-Tek Technologies Limited,EQ,BONUS,1:1,Bonus 1:1,2,INE835B01035,,
 2026-10-09,2026-10-09,MOLDTKPAC,Mold-Tek Packaging Limited,EQ,BONUS,1:1,Bonus 1:1,5,INE893J01011,,
