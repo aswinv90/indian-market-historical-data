@@ -1,5 +1,10 @@
 Ex_Date,Record_Date,Symbol,Company_Name,Series,Action_Type,Ratio_or_Amount,Purpose,Face_Value,ISIN,BC_Start_Date,BC_End_Date
 2026-10-28,2026-10-28,733GS2026,Government of India,GS,OTHER,,Redemption,100,IN0020230119,,
+2026-10-23,2026-10-23,AZADIND,Azad India Mobility Limited,EQ,SPLIT,10:2,Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share,10,INE566M01017,,
+2026-10-22,2026-10-22,JSWDULUX,JSW Dulux Limited,EQ,SPLIT,10:1,Face Value Split (Sub-Division) - From Rs 10/- Per Share To Re 1/- Per Share,10,INE133A01011,,
+2026-10-21,2026-10-21,ELECON,Elecon Engineering Company Limited,EQ,DIVIDEND,0.50,Interim Dividend - Re 0.50 Per Share,1,INE205B01023,,
+2026-10-21,2026-10-21,ICICIAMC,ICICI Prudential Asset Management Company Limited,EQ,DIVIDEND,30.00,Interim Dividend - Rs 30 Per Share,1,INE346A01027,,
+2026-10-21,2026-10-21,MRPL,Mangalore Refinery and Petrochemicals Limited,EQ,DIVIDEND,3.00,Interim Dividend - Rs 3 Per Share,10,INE103A01014,,
 2026-10-21,2026-10-21,SGBOCT26,2.50%GOLDBONDS2026Sr-II,GB,OTHER,,Redemption,3146,IN0020180249,,
 2026-10-16,2026-10-16,BANSALWIRE,Bansal Wire Industries Limited,EQ,SPLIT,5:1,Face Value Split (Sub-Division) - From Rs 5/- Per Share To Re 1/- Per Share,5,INE0B9K01025,,
 2026-10-16,2026-10-16,CRAMC,Canara Robeco Asset Management Company Limited,EQ,DIVIDEND,2.00,Interim Dividend - Rs 2 Per Share,10,INE218I01013,,
