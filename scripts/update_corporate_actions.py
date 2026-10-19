@@ -8,7 +8,6 @@ deduplicates, and updates the master Parquet and CSV files.
 
 import sys
 import json
-import time
 import subprocess
 import re
 from datetime import datetime, timedelta

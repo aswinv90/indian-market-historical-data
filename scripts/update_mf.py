@@ -5,7 +5,6 @@ Daily incremental updater for Indian Mutual Fund NAVs.
 Fetches latest NAVs and updates the partitioned Parquet files in data/MF/.
 """
 
-import sys
 import requests
 import pandas as pd
 from pathlib import Path

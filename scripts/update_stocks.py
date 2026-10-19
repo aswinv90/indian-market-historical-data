@@ -18,7 +18,6 @@ from utils import (
     load_nse_symbols,
     load_bse_symbols,
     merge_and_save,
-    load_existing,
     clean_numeric_columns,
     log_failure,
     log,

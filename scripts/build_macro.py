@@ -9,12 +9,10 @@ Build and compile complete historical macroeconomic and fixed income indicators:
 4. data/MACRO/cpi_inflation.parquet & .csv: Monthly Consumer Price Index and YoY Inflation % (1957 - Present).
 """
 
-import os
 import io
 import re
 import json
-import time
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 import pandas as pd
 from curl_cffi import requests

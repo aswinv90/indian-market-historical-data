@@ -8,10 +8,8 @@ Build and compile the complete master catalog of Sovereign Gold Bonds (SGB) 2015
 3. data/SGB/sgb_market_prices.parquet & .csv: Secondary market exchange quotes & discount/premium to spot gold.
 """
 
-import os
 import io
 import re
-import json
 import urllib.request
 import zipfile
 import xml.etree.ElementTree as ET

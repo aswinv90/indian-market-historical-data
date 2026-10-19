@@ -16,8 +16,6 @@ import datetime
 import urllib.request
 
 ctx = ssl.create_default_context()
-ctx.check_hostname = False
-ctx.verify_mode = ssl.CERT_NONE
 
 def is_market_working_day():
     ist = datetime.timezone(datetime.timedelta(hours=5, minutes=30))

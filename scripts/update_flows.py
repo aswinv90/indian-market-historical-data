@@ -6,9 +6,7 @@ Daily incremental updater for Institutional Capital Flows (FII / DII):
 2. Derivatives Open Interest & Sentiment (FII Long Ratio %) from NSE NSCCL archives.
 """
 
-import os
 import io
-import sys
 import json
 import urllib.request
 from datetime import datetime, timedelta

@@ -7,10 +7,8 @@ covering all standard purities:
   - Silver: 999 Fine Silver, 925 Sterling Silver per 1kg, 10g, and 1g
 """
 
-import sys
 from pathlib import Path
 import pandas as pd
-import numpy as np
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 COMMODITIES_DIR = ROOT_DIR / "data" / "COMMODITIES"

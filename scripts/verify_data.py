@@ -30,9 +30,6 @@ from utils import (
     load_bse_symbols,
     parquet_path,
     FAILED_LOG,
-    log,
-    NSE_DIR,
-    BSE_DIR,
 )
 
 # ── Helpers ───────────────────────────────────────────────────────────────────

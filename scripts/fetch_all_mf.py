@@ -10,7 +10,6 @@ Partitioning:
   - data/MF/nav_part_0.parquet ... nav_part_9.parquet: Historical daily NAVs partitioned by schemeCode % 10
 """
 
-import sys
 import time
 import requests
 import pandas as pd

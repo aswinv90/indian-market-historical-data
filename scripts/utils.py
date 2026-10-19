@@ -2,11 +2,8 @@
 Shared utilities for fetching and storing Indian stock price data.
 """
 
-import os
-import sys
 import time
 import logging
-import subprocess
 import pandas as pd
 from pathlib import Path
 from typing import Optional
@@ -17,9 +14,9 @@ def get_engine():
         import yfinance as eng
         return eng
     except ImportError:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "yfinance>=0.2.40", "-q"])
-        import yfinance as eng
-        return eng
+        raise ImportError(
+            "yfinance is required. Please install dependencies using: pip install -r requirements.txt"
+        )
 
 # ── Paths ────────────────────────────────────────────────────────────────────
 ROOT_DIR = Path(__file__).resolve().parent.parent
