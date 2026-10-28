@@ -1,5 +1,6 @@
 Ex_Date,Record_Date,Symbol,Company_Name,Series,Action_Type,Ratio_or_Amount,Purpose,Face_Value,ISIN,BC_Start_Date,BC_End_Date
 2026-11-06,2026-11-06,KMEW,Knowledge Marine & Engineering Works Limited,EQ,SPLIT,5:1,Face Value Split (Sub-Division) - From Rs 5/- Per Share To Re 1/- Per Share,5,INE0CJD01011,,
+2026-11-04,2026-11-04,CONCORDBIO,Concord Biotech Limited,EQ,BONUS,1:1,Bonus 1:1,1,INE338H01029,,
 2026-10-30,2026-10-30,ADOR,Ador Welding Limited,EQ,DIVIDEND,7.50,Interim Dividend - Rs 7.50 Per Share,10,INE045A01017,,
 2026-10-30,2026-10-30,CHENNPETRO,Chennai Petroleum Corporation Limited,EQ,DIVIDEND,25.00,Interim Dividend - Rs 25 Per Share,10,INE178A01016,,
 2026-10-30,2026-10-30,DALBHARAT,Dalmia Bharat Limited,EQ,DIVIDEND,4.00,Interim Dividend - Rs 4 Per Share,2,INE00R701025,,
@@ -8,6 +9,7 @@ Ex_Date,Record_Date,Symbol,Company_Name,Series,Action_Type,Ratio_or_Amount,Purpo
 2026-10-30,2026-10-30,RAILTEL,Railtel Corporation Of India Limited,EQ,DIVIDEND,1.00,Interim Dividend - Re 1 Per Share,10,INE0DD101019,,
 2026-10-30,2026-10-30,RECLTD,REC Limited,EQ,DIVIDEND,3.50,Interim Dividend - Rs 3.50 Per Share,10,INE020B01018,,
 2026-10-30,2026-10-30,SAGILITY,SAGILITY LIMITED,EQ,DIVIDEND,0.15,Interim Dividend - Re 0.15 Per Share,10,INE0W2G01015,,
+2026-10-30,2026-10-31,SIYSIL,Siyaram Silk Mills Limited,EQ,DIVIDEND,4.00,Interim Dividend - Rs 4 Per Share,2,INE076B01010,,
 2026-10-30,2026-10-30,SPLPETRO,Supreme Petrochem Limited,EQ,DIVIDEND,2.50,Interim Dividend - Rs 2.50 Per Share,2,INE663A01025,,
 2026-10-30,2026-10-30,SSWL,Steel Strips Wheels Limited,EQ,DIVIDEND,1.50,Interim Dividend - Rs 1.50 Per Share,1,INE802C01017,,
 2026-10-30,2026-10-30,SUPREMEIND,Supreme Industries Limited,EQ,DIVIDEND,12.00,Interim Dividend - Rs 12 Per Share,2,INE195A01010,,
