@@ -17,9 +17,11 @@ from __future__ import annotations
 import logging
 import shutil
 import sys
+import time
 import urllib.request
+import urllib.error
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple
 
 import pandas as pd
 
@@ -41,11 +43,46 @@ META_PARQUET = MF_DIR / "mf_meta.parquet"
 AMFI_URL = "https://www.amfiindia.com/spages/NAVAll.txt"
 
 
-def fetch_amfi_lines() -> List[str]:
-    logger.info(f"Fetching {AMFI_URL}...")
-    req = urllib.request.Request(AMFI_URL, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        return resp.read().decode("utf-8", errors="ignore").splitlines()
+def fetch_amfi_lines(max_retries: int = 4, base_delay: float = 5.0) -> List[str]:
+    """
+    Fetches the raw AMFI NAV feed with exponential backoff and payload validation.
+    Retries up to max_retries on network errors, timeouts, or truncated responses.
+    """
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "text/plain,text/html,*/*",
+        "Accept-Encoding": "identity",
+    }
+    last_err: Optional[Exception] = None
+
+    for attempt in range(1, max_retries + 1):
+        try:
+            logger.info(f"Fetching {AMFI_URL} (Attempt {attempt}/{max_retries})...")
+            req = urllib.request.Request(AMFI_URL, headers=headers)
+            with urllib.request.urlopen(req, timeout=45) as resp:
+                status = getattr(resp, "status", 200)
+                if status != 200:
+                    raise urllib.error.URLError(f"HTTP status {status}")
+                raw_data = resp.read().decode("utf-8", errors="ignore")
+                lines = raw_data.splitlines()
+
+            # The AMFI NAV feed typically has 14,000+ lines. If truncated, retry.
+            if len(lines) < 5000:
+                raise ValueError(f"Truncated AMFI payload received: only {len(lines)} lines.")
+
+            logger.info(f"Successfully retrieved {len(lines)} lines from AMFI feed.")
+            return lines
+
+        except Exception as exc:
+            last_err = exc
+            logger.warning(f"Attempt {attempt} failed: {exc}")
+            if attempt < max_retries:
+                delay = base_delay * (2 ** (attempt - 1))
+                logger.info(f"Retrying in {delay:.1f} seconds...")
+                time.sleep(delay)
+
+    logger.critical(f"Failed to fetch AMFI feed after {max_retries} attempts.")
+    raise last_err or RuntimeError("Failed to fetch AMFI feed.")
 
 
 def main() -> None:
@@ -97,8 +134,15 @@ def main() -> None:
 
         incoming_df = pd.DataFrame(new_incoming)
 
-        # Existing key set for exact deduplication
-        existing_keys = set(zip(existing_part_df["schemeCode"], existing_part_df["date"]))
+        # Optimization: Restrict existing partition keys strictly to the incoming date window.
+        # This reduces the key set from ~3,500,000 historical records down to ~1,500 rows,
+        # slashing deduplication time from minutes to milliseconds and saving memory.
+        min_inc_date = incoming_df["date"].min()
+        max_inc_date = incoming_df["date"].max()
+        window_mask = (existing_part_df["date"] >= min_inc_date) & (existing_part_df["date"] <= max_inc_date)
+        window_df = existing_part_df[window_mask]
+
+        existing_keys = set(zip(window_df["schemeCode"], window_df["date"]))
 
         # Identify genuinely new rows
         genuinely_new_mask = [
@@ -112,11 +156,11 @@ def main() -> None:
             counts = genuinely_new_df["schemeCode"].value_counts().to_dict()
             for code, cnt in counts.items():
                 new_records_count_by_code[int(code)] = cnt
-
-        # Combine and sort candidate partition
-        combined_df = pd.concat([existing_part_df, genuinely_new_df], ignore_index=True)
-        combined_df.sort_values(by=["schemeCode", "date"], inplace=True)
-        candidate_partition_dfs[part_idx] = combined_df
+            combined_df = pd.concat([existing_part_df, genuinely_new_df], ignore_index=True)
+            combined_df.sort_values(by=["schemeCode", "date"], inplace=True)
+            candidate_partition_dfs[part_idx] = combined_df
+        else:
+            candidate_partition_dfs[part_idx] = existing_part_df
 
     total_new_obs = sum(new_records_count_by_code.values())
     logger.info(f"Idempotency check: {total_new_obs} genuinely new NAV observations to insert.")
@@ -232,4 +276,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        logger.exception(f"FATAL: Unhandled exception during mutual fund update: {e}")
+        sys.exit(1)
