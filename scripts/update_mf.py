@@ -136,6 +136,10 @@ def main() -> None:
 
     old_meta_df = pd.read_parquet(META_PARQUET)
     old_records = old_meta_df.to_dict(orient="records")
+    for r in old_records:
+        for k, v in r.items():
+            if pd.isna(v):
+                r[k] = None
     meta_by_code: Dict[int, Dict[str, Any]] = {r["amfi_code"]: r.copy() for r in old_records}
 
     # 2. Parse AMFI feed strictly
@@ -198,7 +202,7 @@ def main() -> None:
             for code, cnt in counts.items():
                 new_records_count_by_code[int(code)] = cnt
             combined_df = pd.concat([existing_part_df, genuinely_new_df], ignore_index=True)
-            combined_df.sort_values(by=["schemeCode", "date"], inplace=True)
+            combined_df = combined_df.sort_values(by=["schemeCode", "date"])
             candidate_partition_dfs[part_idx] = combined_df
         else:
             candidate_partition_dfs[part_idx] = existing_part_df

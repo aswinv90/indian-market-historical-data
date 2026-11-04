@@ -13,10 +13,13 @@ Strict Principles:
 from __future__ import annotations
 
 import logging
+import math
 import re
 from dataclasses import dataclass
 from datetime import date, datetime
 from typing import Any, Dict, List, Optional, Set, Tuple
+
+import pandas as pd
 
 logger = logging.getLogger("mf_parser")
 
@@ -427,10 +430,10 @@ def assert_metadata_integrity(records: List[Dict[str, Any]]) -> None:
         # Validated ISIN formatting
         for isin_field in ("isin_growth", "isin_payout", "isin_reinvestment"):
             isin_val = r.get(isin_field)
-            if isin_val is not None:
-                assert ISIN_REGEX.match(isin_val), f"Row {idx} ({code}): invalid format for {isin_field}: '{isin_val}'"
+            if isin_val is not None and not pd.isna(isin_val) and isinstance(isin_val, str) and isin_val.strip():
+                assert ISIN_REGEX.match(isin_val.strip()), f"Row {idx} ({code}): invalid format for {isin_field}: '{isin_val}'"
 
         # Date chronology
         d1, d2 = r.get("first_nav_date"), r.get("latest_nav_date")
-        if d1 and d2:
+        if d1 is not None and d2 is not None and not pd.isna(d1) and not pd.isna(d2):
             assert d1 <= d2, f"Row {idx} ({code}): chronology violation: first_nav_date ({d1}) > latest_nav_date ({d2})"
