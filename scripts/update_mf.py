@@ -40,49 +40,90 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 BASE_DIR = Path(__file__).resolve().parent.parent
 MF_DIR = BASE_DIR / "data" / "MF"
 META_PARQUET = MF_DIR / "mf_meta.parquet"
-AMFI_URL = "https://www.amfiindia.com/spages/NAVAll.txt"
+AMFI_URLS = [
+    "https://www.amfiindia.com/spages/NAVAll.txt",
+    "https://portal.amfiindia.com/spages/NAVAll.txt",
+    "http://portal.amfiindia.com/spages/NAVAll.txt",
+]
+
+
+def _try_fetch_feed(url: str, timeout: int = 30) -> Optional[List[str]]:
+    """Tries fetching the AMFI feed using curl_cffi, requests, or urllib."""
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+
+    # Strategy 1: curl_cffi (Chrome TLS fingerprint impersonation to bypass WAF/datacenter policy blocks)
+    try:
+        from curl_cffi import requests as c_requests
+        resp = c_requests.get(url, headers=headers, impersonate="chrome120", timeout=timeout)
+        if resp.status_code == 200 and len(resp.text) > 100000:
+            lines = resp.text.splitlines()
+            if len(lines) >= 5000:
+                logger.info(f"Successfully fetched feed via curl_cffi from {url} ({len(lines)} lines).")
+                return lines
+    except Exception as exc:
+        logger.debug(f"Strategy 1 (curl_cffi) failed for {url}: {exc}")
+
+    # Strategy 2: requests (standard HTTP/1.1 with browser headers)
+    try:
+        import requests
+        resp = requests.get(url, headers=headers, timeout=timeout)
+        if resp.status_code == 200 and len(resp.text) > 100000:
+            lines = resp.text.splitlines()
+            if len(lines) >= 5000:
+                logger.info(f"Successfully fetched feed via requests from {url} ({len(lines)} lines).")
+                return lines
+    except Exception as exc:
+        logger.debug(f"Strategy 2 (requests) failed for {url}: {exc}")
+
+    # Strategy 3: urllib.request (fallback)
+    try:
+        import ssl
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
+            raw = r.read().decode("utf-8", errors="ignore")
+            lines = raw.splitlines()
+            if len(lines) >= 5000:
+                logger.info(f"Successfully fetched feed via urllib from {url} ({len(lines)} lines).")
+                return lines
+    except Exception as exc:
+        logger.debug(f"Strategy 3 (urllib) failed for {url}: {exc}")
+
+    return None
 
 
 def fetch_amfi_lines(max_retries: int = 4, base_delay: float = 5.0) -> List[str]:
     """
-    Fetches the raw AMFI NAV feed with exponential backoff and payload validation.
-    Retries up to max_retries on network errors, timeouts, or truncated responses.
+    Fetches the raw AMFI NAV feed with multi-tier clients (curl_cffi -> requests -> urllib),
+    fallback mirror endpoints (www.amfiindia.com -> portal.amfiindia.com), and exponential backoff.
     """
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept": "text/plain,text/html,*/*",
-        "Accept-Encoding": "identity",
-    }
     last_err: Optional[Exception] = None
 
     for attempt in range(1, max_retries + 1):
-        try:
-            logger.info(f"Fetching {AMFI_URL} (Attempt {attempt}/{max_retries})...")
-            req = urllib.request.Request(AMFI_URL, headers=headers)
-            with urllib.request.urlopen(req, timeout=45) as resp:
-                status = getattr(resp, "status", 200)
-                if status != 200:
-                    raise urllib.error.URLError(f"HTTP status {status}")
-                raw_data = resp.read().decode("utf-8", errors="ignore")
-                lines = raw_data.splitlines()
+        logger.info(f"Fetching AMFI feed (Attempt {attempt}/{max_retries})...")
 
-            # The AMFI NAV feed typically has 14,000+ lines. If truncated, retry.
-            if len(lines) < 5000:
-                raise ValueError(f"Truncated AMFI payload received: only {len(lines)} lines.")
+        for url in AMFI_URLS:
+            try:
+                lines = _try_fetch_feed(url, timeout=35)
+                if lines:
+                    return lines
+            except Exception as exc:
+                last_err = exc
+                logger.warning(f"Error fetching from {url}: {exc}")
 
-            logger.info(f"Successfully retrieved {len(lines)} lines from AMFI feed.")
-            return lines
+        if attempt < max_retries:
+            delay = base_delay * (2 ** (attempt - 1))
+            logger.info(f"All mirrors failed on attempt {attempt}. Retrying in {delay:.1f} seconds...")
+            time.sleep(delay)
 
-        except Exception as exc:
-            last_err = exc
-            logger.warning(f"Attempt {attempt} failed: {exc}")
-            if attempt < max_retries:
-                delay = base_delay * (2 ** (attempt - 1))
-                logger.info(f"Retrying in {delay:.1f} seconds...")
-                time.sleep(delay)
-
-    logger.critical(f"Failed to fetch AMFI feed after {max_retries} attempts.")
-    raise last_err or RuntimeError("Failed to fetch AMFI feed.")
+    logger.critical(f"Failed to fetch AMFI feed from all mirrors after {max_retries} attempts.")
+    raise last_err or RuntimeError("Failed to fetch AMFI feed from all available mirrors.")
 
 
 def main() -> None:
